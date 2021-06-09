@@ -1,0 +1,11 @@
+export enum Roles {
+  GLOBAL = 100,
+  SUBSCRIBER = 200,
+  VIP = 300,
+  REGUALR = 400,
+  EDITOR = 500,
+  MODERATOR = 600,
+  SUPERMOD = 700,
+  BROADCASTER = 800,
+  ADMIN = 900,
+}
