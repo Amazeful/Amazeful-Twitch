@@ -25,17 +25,17 @@ describe("User Model", () => {
     let repository = orm.em.getRepository(User);
 
     let id = getId();
-    let user = new User(
-      id,
-      "amazeful",
-      "Amazeful",
-      "staff",
-      "partner",
-      "just a random text",
-      "https://example.com/img.jpg",
-      "https://example.com/img.jpg",
-      1000
-    );
+    let user = new User({
+      userID: id,
+      login: "amazeful",
+      displayName: "Amazeful",
+      type: "staff",
+      broadcasterType: "partner",
+      description: "just a random text",
+      profileImageURL: "https://example.com/img.jpg",
+      offlineImageURL: "https://example.com/img.jpg",
+      viewCount: 1000,
+    });
 
     await repository.persistAndFlush(user);
     var myUser = await repository.findOne({ userID: id });
@@ -48,17 +48,17 @@ describe("User Model", () => {
     let repository = orm.em.getRepository(User);
     let id = getId();
 
-    let user = new User(
-      id,
-      "amazeful",
-      "Amazeful",
-      "staff",
-      "partner",
-      "just a random text",
-      "https://example.com/img.jpg",
-      "https://example.com/img.jpg",
-      1000
-    );
+    let user = new User({
+      userID: id,
+      login: "amazeful",
+      displayName: "Amazeful",
+      type: "staff",
+      broadcasterType: "partner",
+      description: "just a random text",
+      profileImageURL: "https://example.com/img.jpg",
+      offlineImageURL: "https://example.com/img.jpg",
+      viewCount: 1000,
+    });
 
     let channel = new Channel(id);
 
@@ -106,17 +106,17 @@ describe("Channel Model", () => {
     let channelRepository = orm.em.getRepository(Channel);
     let channelID = getId();
     let channel = new Channel(channelID);
-    let editor1 = new User(
-      getId(),
-      "amazeful",
-      "Amazeful",
-      "staff",
-      "partner",
-      "just a random text",
-      "https://example.com/img.jpg",
-      "https://example.com/img.jpg",
-      1000
-    );
+    let editor1 = new User({
+      userID: id,
+      login: "amazeful",
+      displayName: "Amazeful",
+      type: "staff",
+      broadcasterType: "partner",
+      description: "just a random text",
+      profileImageURL: "https://example.com/img.jpg",
+      offlineImageURL: "https://example.com/img.jpg",
+      viewCount: 1000,
+    });
 
     channel.managers.add(editor1);
     channelRepository.persist(channel);
