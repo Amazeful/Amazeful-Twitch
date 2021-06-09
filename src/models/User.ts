@@ -6,7 +6,7 @@ import {
   Unique,
   Collection,
 } from "@mikro-orm/core";
-import { BaseModel } from "./BaseEntity";
+import { BaseModel } from "./BaseModel";
 import { Channel } from "./Channel";
 
 @Entity()
@@ -52,4 +52,28 @@ export class User extends BaseModel {
 
   @ManyToMany({ entity: () => Channel, mappedBy: "managers" })
   manages = new Collection<Channel>(this);
+
+  constructor(
+    userID: number,
+    login: string,
+    displayName: string,
+    type: string,
+    broadcasterType: string,
+    description: string,
+    profileImageURL: string,
+    offlineImageURL: string,
+    viewCount: number
+  ) {
+    super();
+
+    this.userID = userID;
+    this.login = login;
+    this.displayName = displayName;
+    this.type = type;
+    this.broadcasterType = broadcasterType;
+    this.description = description;
+    this.profileImageURL = profileImageURL;
+    this.offlineImageURL = offlineImageURL;
+    this.viewCount = viewCount;
+  }
 }

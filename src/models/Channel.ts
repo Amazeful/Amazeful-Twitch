@@ -6,7 +6,7 @@ import {
   Collection,
   ManyToMany,
 } from "@mikro-orm/core";
-import { BaseModel } from "./BaseEntity";
+import { BaseModel } from "./BaseModel";
 import { User } from "./User";
 
 @Entity()
@@ -59,4 +59,10 @@ export class Channel extends BaseModel {
 
   @ManyToMany({ entity: () => User, inversedBy: "manages", nullable: true })
   managers = new Collection<User>(this);
+
+  constructor(channelID: number) {
+    super();
+
+    this.channelID = channelID;
+  }
 }
