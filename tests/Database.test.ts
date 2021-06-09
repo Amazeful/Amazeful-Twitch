@@ -154,7 +154,7 @@ test("Create audit logs", async () => {
   repository.persist(
     new Audit(
       AuditLogCategory.BOT,
-      "Silent",
+      "silence",
       "Enabled silent mode",
       Roles.ADMIN,
       "amazeful"
@@ -164,7 +164,7 @@ test("Create audit logs", async () => {
   repository.persist(
     new Audit(
       AuditLogCategory.BOT,
-      "Silent",
+      "unsilence",
       "Disabled silent mode",
       Roles.ADMIN,
       "amazeful"
@@ -174,7 +174,7 @@ test("Create audit logs", async () => {
   repository.persist(
     new Audit(
       AuditLogCategory.BOT,
-      "Join",
+      "join",
       "joined channel",
       Roles.BROADCASTER,
       "forsen"
