@@ -4,6 +4,9 @@ import { TriviaCategory } from "../src/types/TriviaCategory";
 import { User } from "../src/models/User";
 import { ObjectId } from "mongodb";
 import { Question } from "../src/models/Question";
+import { Audit } from "../src/models/Audit";
+import { AuditLogCategory } from "../src/types/AuditLogCategory";
+import { Roles } from "../src/types/Roles";
 
 var id = 100;
 
@@ -22,16 +25,17 @@ describe("User Model", () => {
     let repository = orm.em.getRepository(User);
 
     let id = getId();
-    let user = new User();
-    user.userID = id;
-    user.login = "amazeful";
-    user.displayName = "Amazeful";
-    user.type = "staff";
-    user.broadcasterType = "partner";
-    user.description = "Just a random text";
-    user.profileImageURL = "https://example.com/img.jpg";
-    user.offlineImageURL = "https://example.com/img.jpg";
-    user.viewCount = 1000;
+    let user = new User(
+      id,
+      "amazeful",
+      "Amazeful",
+      "staff",
+      "partner",
+      "just a random text",
+      "https://example.com/img.jpg",
+      "https://example.com/img.jpg",
+      1000
+    );
 
     await repository.persistAndFlush(user);
     var myUser = await repository.findOne({ userID: id });
@@ -44,19 +48,19 @@ describe("User Model", () => {
     let repository = orm.em.getRepository(User);
     let id = getId();
 
-    let user = new User();
-    user.userID = id;
-    user.login = "amazeful";
-    user.displayName = "Amazeful";
-    user.type = "staff";
-    user.broadcasterType = "partner";
-    user.description = "Just a random text";
-    user.profileImageURL = "https://example.com/img.jpg";
-    user.offlineImageURL = "https://example.com/img.jpg";
-    user.viewCount = 1000;
+    let user = new User(
+      id,
+      "amazeful",
+      "Amazeful",
+      "staff",
+      "partner",
+      "just a random text",
+      "https://example.com/img.jpg",
+      "https://example.com/img.jpg",
+      1000
+    );
 
-    let channel = new Channel();
-    channel.channelID = id;
+    let channel = new Channel(id);
 
     user.primaryChannel = channel;
 
@@ -78,8 +82,7 @@ describe("Channel Model", () => {
     let repository = orm.em.getRepository(Channel);
 
     let id = getId();
-    let channel = new Channel();
-    channel.channelID = id;
+    let channel = new Channel(id);
     await repository.persistAndFlush(channel);
     var myChannel = await repository.findOne({ channelID: id });
 
@@ -102,19 +105,18 @@ describe("Channel Model", () => {
     let userRepository = orm.em.getRepository(User);
     let channelRepository = orm.em.getRepository(Channel);
     let channelID = getId();
-    let channel = new Channel();
-    channel.channelID = channelID;
-
-    let editor1 = new User();
-    editor1.userID = getId();
-    editor1.login = "amazeful";
-    editor1.displayName = "Amazeful";
-    editor1.type = "staff";
-    editor1.broadcasterType = "partner";
-    editor1.description = "Just a random text";
-    editor1.profileImageURL = "https://example.com/img.jpg";
-    editor1.offlineImageURL = "https://example.com/img.jpg";
-    editor1.viewCount = 1000;
+    let channel = new Channel(channelID);
+    let editor1 = new User(
+      getId(),
+      "amazeful",
+      "Amazeful",
+      "staff",
+      "partner",
+      "just a random text",
+      "https://example.com/img.jpg",
+      "https://example.com/img.jpg",
+      1000
+    );
 
     channel.managers.add(editor1);
     channelRepository.persist(channel);
@@ -134,10 +136,7 @@ test("create new question", async () => {
   var orm = await getDatabase();
   let repository = orm.em.getRepository(Question);
 
-  let question = new Question();
-  question.question = "What is 2 + 2?";
-  question.answer = "4";
-  question.category = TriviaCategory.GENERAL;
+  let question = new Question("What is 2 + 2?", "4", TriviaCategory.GENERAL);
 
   await repository.persistAndFlush(question);
 
@@ -148,6 +147,46 @@ test("create new question", async () => {
   expect(myQuestion!.category).toBe(TriviaCategory.GENERAL);
 });
 
+test("Create audit logs", async () => {
+  var orm = await getDatabase();
+  let repository = orm.em.getRepository(Audit);
+
+  repository.persist(
+    new Audit(
+      AuditLogCategory.BOT,
+      "Silent",
+      "Enabled silent mode",
+      Roles.ADMIN,
+      "amazeful"
+    )
+  );
+
+  repository.persist(
+    new Audit(
+      AuditLogCategory.BOT,
+      "Silent",
+      "Disabled silent mode",
+      Roles.ADMIN,
+      "amazeful"
+    )
+  );
+
+  repository.persist(
+    new Audit(
+      AuditLogCategory.BOT,
+      "Join",
+      "joined channel",
+      Roles.BROADCASTER,
+      "forsen"
+    )
+  );
+
+  await repository.flush();
+
+  var records = await repository.findAll();
+
+  expect(records.length).toBe(3);
+});
 function getId(): number {
   id++;
   return id;
