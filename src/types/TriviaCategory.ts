@@ -1,3 +1,4 @@
+//TriviaCategory defines the category for trivia questions
 export enum TriviaCategory {
   TWITCH = "twitch",
   POLITICS = "politics",

@@ -1,11 +1,12 @@
+//Enum roles defines flags for user roles
 export enum Roles {
-  GLOBAL = 100,
-  SUBSCRIBER = 200,
-  VIP = 300,
-  REGUALR = 400,
-  EDITOR = 500,
-  MODERATOR = 600,
-  SUPERMOD = 700,
-  BROADCASTER = 800,
-  ADMIN = 900,
+  GLOBAL = 1 << 0,
+  SUBSCRIBER = 1 << 1,
+  VIP = 1 << 2,
+  REGUALR = 1 << 3,
+  EDITOR = 1 << 4,
+  MODERATOR = 1 << 5,
+  SUPERMOD = 1 << 6,
+  BROADCASTER = 1 << 7,
+  ADMIN = 1 << 8,
 }
