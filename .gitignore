@@ -9,3 +9,4 @@
 /.pnp.*
 /bin
 /.yarn
+/.logs
