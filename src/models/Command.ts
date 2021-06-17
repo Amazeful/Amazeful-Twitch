@@ -1,13 +1,25 @@
-import { Entity, Enum, Index, Property, Unique } from "@mikro-orm/core";
+import {
+  ArrayType,
+  Embedded,
+  Entity,
+  Enum,
+  Property,
+  Unique,
+} from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
 import { Roles } from "../types/Roles";
 import { StreamStatus } from "../types/StreamStatus";
+import { Timer } from "./embeddables/Timer";
+import { CommandAttributes } from "./embeddables/CommandAttributes";
 
 @Entity()
+@Unique({ properties: ["name", "channelID"] })
 export class Command extends BaseModel {
-  @Unique()
   @Property()
   name!: string;
+
+  @Property()
+  channelID!: number;
 
   @Property()
   enabled: boolean = true;
@@ -26,4 +38,23 @@ export class Command extends BaseModel {
 
   @Property()
   response!: string;
+
+  @Property({ type: ArrayType })
+  aliases: string[] = [];
+
+  @Property()
+  hasVars: boolean = false;
+
+  @Embedded({ entity: () => Timer })
+  timer: Timer = new Timer();
+
+  @Embedded({ entity: () => CommandAttributes })
+  attributes: CommandAttributes = new CommandAttributes();
+
+  constructor(name: string, channelID: number, response: string) {
+    super();
+    this.name = name;
+    this.channelID = channelID;
+    this.response = response;
+  }
 }
