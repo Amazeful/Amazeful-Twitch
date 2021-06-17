@@ -5,8 +5,8 @@ import {
   Logger as WinstonLogger,
 } from "winston";
 import chalk from "chalk";
-import { injectable, singleton } from "tsyringe";
 
+//LogLevel is an enum type with possible log levels
 export enum LogLevel {
   ERROR = "error",
   WARN = "warn",
@@ -92,6 +92,12 @@ export class Logger {
     ],
   });
 
+  /**
+   * send a log to console and file transports
+   * @param level the level of the log
+   * @param message log message
+   * @param module name of the module where this log was originated from (optional)
+   */
   public static log(level: LogLevel, message: string, module?: string) {
     this.winstonLogger.log(level, message, { module: module });
   }
