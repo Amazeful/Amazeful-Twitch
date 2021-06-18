@@ -49,6 +49,7 @@ describe("./models/Audit", () => {
 
     await repository.flush();
 
+    orm.em.clear();
     var records = await repository.findAll();
 
     expect(records.length).toBe(3);

@@ -20,6 +20,8 @@ describe("./models/Channel", () => {
     let id = getId();
     let channel = new Channel(id);
     await repository.persistAndFlush(channel);
+
+    orm.em.clear();
     var myChannel = await repository.findOneOrFail({ channelID: id });
 
     expect(typeof myChannel.id).toBe("string");
@@ -59,13 +61,20 @@ describe("./models/Channel", () => {
 
     await channelRepository.persistAndFlush(channel);
 
-    let myChannel = await channelRepository.findOneOrFail({
-      channelID: channelID,
-    });
-    let myUser = await userRepository.findOneOrFail({ userID: editor1.userID });
+    orm.em.clear();
 
-    expect(myChannel.managers.getItems()[0]).toStrictEqual(editor1);
-    expect(myUser.manages.getItems()[0]).toStrictEqual(channel);
-    expect(true).toBe(true);
+    let myChannel = await channelRepository.findOneOrFail(
+      {
+        channelID: channelID,
+      },
+      ["managers"]
+    );
+    let myUser = await userRepository.findOneOrFail(
+      { userID: editor1.userID },
+      ["manages"]
+    );
+
+    expect(myChannel.managers.getItems()[0].login).toBe(editor1.login);
+    expect(myUser.manages.getItems()[0].channelID).toBe(channel.channelID);
   });
 });

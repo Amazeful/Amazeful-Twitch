@@ -19,6 +19,7 @@ describe("./models/Question", () => {
 
     await repository.persistAndFlush(question);
 
+    orm.em.clear();
     var myQuestion = await repository.findOneOrFail({
       question: "What is 2 + 2?",
     });

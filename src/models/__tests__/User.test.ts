@@ -1,6 +1,7 @@
 import { setupORM, getORM, getId } from "./setup.test";
 import { User } from "../User";
 import { Channel } from "../Channel";
+import { Collection } from "@mikro-orm/core";
 beforeAll(async () => {
   return setupORM();
 });
@@ -29,9 +30,26 @@ describe("./models/User", () => {
     });
 
     await repository.persistAndFlush(user);
-    var myUser = await repository.findOne({ userID: id });
+    orm.em.clear();
+    var myUser = await repository.findOneOrFail({ userID: id });
+    expect(myUser.broadcasterType).toBe(user.broadcasterType);
+    expect(myUser.createdAt).toBeInstanceOf(Date);
+    expect(myUser.description).toBe(user.description);
+    expect(myUser.displayName).toBe(user.displayName);
+    expect(myUser.id).toBe(user.id);
+    expect(myUser.login).toBe(user.login);
+    expect(myUser.manages.isInitialized()).toBe(false);
+    expect(myUser.offlineImageURL).toBe(user.offlineImageURL);
+    expect(myUser.profileImageURL).toBe(user.profileImageURL);
+    expect(myUser.primaryChannel).toBe(undefined);
+    expect(myUser.suspended).toBe(false);
+    expect(myUser.type).toBe(user.type);
+    expect(myUser.updatedAt).toBeInstanceOf(Date);
+    expect(myUser.userID).toBe(user.userID);
+    expect(myUser.viewCount).toBe(user.viewCount);
 
-    expect(myUser).toStrictEqual(user);
+    await myUser.manages.init();
+    expect(myUser.manages).toStrictEqual(user.manages);
   });
 
   test("create user with primary channel", async () => {
@@ -56,13 +74,14 @@ describe("./models/User", () => {
     user.primaryChannel = channel;
 
     await repository.persistAndFlush(user);
-    var myUser = await repository.findOneOrFail({ userID: id });
-    let channelRepository = orm.em.getRepository(Channel);
+    orm.em.clear();
 
-    var myChannel = await channelRepository.findOneOrFail({ channelID: id });
+    var myUser = await repository.findOneOrFail({ userID: id }, [
+      "primaryChannel",
+    ]);
 
-    expect(myUser).toStrictEqual(user);
-    expect(myUser.primaryChannel).toStrictEqual(channel);
-    expect(myChannel.owner).toStrictEqual(user);
+    expect(myUser.primaryChannel!.channelID).toStrictEqual(
+      user.primaryChannel.channelID
+    );
   });
 });
