@@ -5,7 +5,7 @@ var orm: MikroORM<IDatabaseDriver<Connection>>;
 var id = 0;
 export async function setupORM() {
   orm = await MikroORM.init<MongoDriver>({
-    entities: ["./src/models/*.ts", "./src/models/embeddables/*.ts"],
+    entities: ["./lib/models/*.ts", "./lib/models/embeddables/*.ts"],
     dbName: "test",
     type: "mongo",
     ensureIndexes: true,
