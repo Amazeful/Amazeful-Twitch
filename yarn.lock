@@ -1122,6 +1122,7 @@ __metadata:
     "@types/winston": ^2.4.4
     chalk: ^4.1.1
     dank-twitch-irc: "Amazeful/dank-twitch-irc#build"
+    dotenv: ^10.0.0
     jest: ^27.0.4
     joi: ^17.4.0
     logform: ^2.2.0
@@ -1923,6 +1924,13 @@ __metadata:
   version: 8.2.0
   resolution: "dotenv@npm:8.2.0"
   checksum: 16cb89cbd7b98b053899b8aba8c5044c8fb61a2db8a81fe70360b75035fce5fed53bd7a34d772be717d0880c0321122a4c09423f518025e1b52d96791521b1a7
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "dotenv@npm:10.0.0"
+  checksum: 9c45712e213de63bdb646b8e5344749b7566e25a67bbd3f03711d54e40eff10066c1f23eff0081d0949fda7c8efcc6e9e8bf18d0f023a8274f55f5d5f97bb6db
   languageName: node
   linkType: hard
 
