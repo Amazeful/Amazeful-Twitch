@@ -1,4 +1,4 @@
-import { Bot } from "./lib/core/Bot";
+import { Bot } from "./src/core/Bot";
 
 declare global {
   namespace NodeJS {
