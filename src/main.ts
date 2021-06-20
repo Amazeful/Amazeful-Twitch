@@ -1,4 +1,3 @@
-import { ClientConfiguration } from "dank-twitch-irc";
 import { Bot } from "./core/Bot";
 import { EnvSchema } from "./validators/schemas/EnvSchema";
 import * as dotenv from "dotenv";

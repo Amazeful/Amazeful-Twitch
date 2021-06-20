@@ -1,6 +1,9 @@
 import { DebugLogger } from "../decorators/DebugLogger";
 import { ChatClient } from "../twitch/Client";
 import { TwitchData } from "../types/TwitchAuth";
+import { Agenda } from "agenda";
+import { ChannelBot } from "./ChannelBot";
+import { Logger, LogLevel } from "../utils/Logger";
 
 /**
  * Class Bot defines global Twitch bot object
@@ -9,7 +12,9 @@ import { TwitchData } from "../types/TwitchAuth";
  */
 export class Bot {
   private _twitchData: TwitchData;
-  private _chatClient: ChatClient;
+  private readonly _chatClient: ChatClient;
+  private readonly _agenda: Agenda;
+  private _channelBots: Map<number, ChannelBot>;
 
   constructor(twitchData: TwitchData) {
     this._twitchData = twitchData;
@@ -24,6 +29,9 @@ export class Bot {
         releaseTime: 2000,
       },
     });
+
+    this._agenda = new Agenda();
+    this._channelBots = new Map();
   }
 
   /**
@@ -31,6 +39,23 @@ export class Bot {
    */
   @DebugLogger
   public async init() {
-    await this._chatClient.connect();
+    try {
+      await this._chatClient.connect();
+      await this._agenda.start();
+    } catch (e) {
+      Logger.log(
+        LogLevel.ERROR,
+        `Failed to init the global bot object. Shutting down ...`
+      );
+      process.exit();
+    }
+  }
+
+  get client() {
+    return this._chatClient;
+  }
+
+  get twitchData() {
+    return this._twitchData;
   }
 }
