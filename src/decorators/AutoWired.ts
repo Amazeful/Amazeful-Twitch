@@ -1,5 +1,4 @@
 import { container } from "tsyringe";
-import { ChatClient } from "../twitch/ChatClient";
 export const AutoWired: PropertyDecorator = (target, propertyKey) => {
   const type = Reflect.getMetadata("design:type", target, propertyKey);
   //Do nothing if a method
