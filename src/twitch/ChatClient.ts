@@ -1,7 +1,6 @@
 import {
   AlternateMessageModifier,
   ChatClient as DankClient,
-  ClientConfiguration,
   correctChannelName,
   removeInPlace,
   say,
@@ -10,24 +9,24 @@ import {
   SlowModeRateLimiter,
   validateChannelName,
 } from "dank-twitch-irc";
+import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";
+import { ChatClientConfig } from "../config/ChatClientConfig";
 
+@singleton()
 export class ChatClient extends DankClient {
   public massTransportSockets: SingleConnection[];
   public massTransportPoolSize: number;
 
-  constructor(
-    configuration: ClientConfiguration,
-    massTransportPoolSize: number = 100
-  ) {
-    super(configuration);
+  constructor() {
+    super(ChatClientConfig);
+    this.massTransportPoolSize = ChatClientConfig.poolSize;
     this.use(new AlternateMessageModifier(this));
     this.use(new SlowModeRateLimiter(this));
-    this.massTransportPoolSize = massTransportPoolSize;
     this.massTransportSockets = [];
 
-    for (var i = 0; i < massTransportPoolSize; i++) {
+    for (var i = 0; i < this.massTransportPoolSize; i++) {
       this.newMassTransportSocket();
     }
 
@@ -70,7 +69,6 @@ export class ChatClient extends DankClient {
     conn.connect();
 
     this.massTransportSockets.push(conn);
-    console.log(this.massTransportSockets.length);
     return conn;
   }
 
