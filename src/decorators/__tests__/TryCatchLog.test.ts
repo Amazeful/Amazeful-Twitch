@@ -1,5 +1,4 @@
 import { Logger, LogLevel } from "../../utils/Logger";
-import { DebugLogger } from "../DebugLogger";
 import { TryCatchLog } from "../TryCatchLog";
 
 class TestClass {
