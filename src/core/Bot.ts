@@ -1,35 +1,21 @@
 import { DebugLogger } from "../decorators/DebugLogger";
-import { ChatClient } from "../twitch/Client";
-import { TwitchData } from "../types/TwitchAuth";
 import { Agenda } from "agenda";
-import { ChannelBot } from "./ChannelBot";
 import { Logger, LogLevel } from "../utils/Logger";
-
+import { Channel } from "./ChannelBot";
+import { AutoWired } from "../decorators/AutoWired";
+import { ChatClient } from "../twitch/ChatClient";
 /**
- * Class Bot defines global Twitch bot object
- * Serves as an entry point for all modules
+ * Class Bot defines global Twitch bot instance
+ * Serves as an entry point for all channelbots
  * All components are accessable through this class
  */
+
 export class Bot {
-  private _twitchData: TwitchData;
-  private readonly _chatClient: ChatClient;
   private readonly _agenda: Agenda;
-  private _channelBots: Map<number, ChannelBot>;
+  @AutoWired private readonly _client!: ChatClient;
+  private _channelBots: Map<number, Channel>;
 
-  constructor(twitchData: TwitchData) {
-    this._twitchData = twitchData;
-    this._chatClient = new ChatClient({
-      username: this._twitchData.username,
-      password: this._twitchData.password,
-      rateLimits: this._twitchData.botStatus,
-      installDefaultMixins: true,
-      maxChannelCountPerConnection: 200,
-      connectionRateLimits: {
-        parallelConnections: 100,
-        releaseTime: 2000,
-      },
-    });
-
+  constructor() {
     this._agenda = new Agenda();
     this._channelBots = new Map();
   }
@@ -40,22 +26,14 @@ export class Bot {
   @DebugLogger
   public async init() {
     try {
-      await this._chatClient.connect();
       await this._agenda.start();
+      await this._client.connect();
     } catch (e) {
       Logger.log(
         LogLevel.ERROR,
-        `Failed to init the global bot object. Shutting down ...`
+        `Failed to init the global bot object. Shutting down ...: ${e}`
       );
       process.exit();
     }
-  }
-
-  get client() {
-    return this._chatClient;
-  }
-
-  get twitchData() {
-    return this._twitchData;
   }
 }
