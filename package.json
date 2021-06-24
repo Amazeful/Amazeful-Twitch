@@ -1,8 +1,20 @@
 {
   "name": "amazeful-twitch",
+  "version": "1.0.0",
+  "description": "An open-source multi-purpose Twitch.tv bot",
+  "license": "AGPL-3.0",
+  "author": "Amazeful",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Amazeful/Amazeful-Twitch.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Amazeful/Amazeful-Twitch/issues"
+  },
   "scripts": {
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "start": "yarn tsc && node ./bin/index.js"
   },
   "dependencies": {
     "@mikro-orm/core": "^4.5.6",
