@@ -1,4 +1,6 @@
 import { container } from "tsyringe";
+
+//AutoWired injects injectable classes into class properties
 export const AutoWired: PropertyDecorator = (target, propertyKey) => {
   const type = Reflect.getMetadata("design:type", target, propertyKey);
   //Do nothing if a method
