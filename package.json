@@ -28,6 +28,7 @@
     "chalk": "^4.1.1",
     "dank-twitch-irc": "Amazeful/dank-twitch-irc#build",
     "dotenv": "^10.0.0",
+    "ioredis": "^4.27.6",
     "joi": "^17.4.0",
     "logform": "^2.2.0",
     "mongodb": "^3.6.9",
@@ -38,6 +39,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@types/ioredis": "^4.26.4",
     "@types/jest": "^26.0.23",
     "jest": "^27.0.4",
     "ts-jest": "^27.0.2",
