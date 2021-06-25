@@ -910,6 +910,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/ioredis@npm:^4.26.4":
+  version: 4.26.4
+  resolution: "@types/ioredis@npm:4.26.4"
+  dependencies:
+    "@types/node": "*"
+  checksum: 0138b8c3c290b4917529d797380a31f365756ac9056525dc19a6eb91e9f8484e1116fc249b91001ac3bf1ddcfbd68f1b685d83f63b4e4751022bb000dd7347ea
+  languageName: node
+  linkType: hard
+
 "@types/istanbul-lib-coverage@npm:*, @types/istanbul-lib-coverage@npm:^2.0.0, @types/istanbul-lib-coverage@npm:^2.0.1":
   version: 2.0.3
   resolution: "@types/istanbul-lib-coverage@npm:2.0.3"
@@ -1129,6 +1138,7 @@ __metadata:
     "@mikro-orm/core": ^4.5.6
     "@mikro-orm/mongodb": ^4.5.6
     "@types/chalk": ^2.2.0
+    "@types/ioredis": ^4.26.4
     "@types/jest": ^26.0.23
     "@types/logform": ^1.10.1
     "@types/mongodb": ^3.6.17
@@ -1138,6 +1148,7 @@ __metadata:
     chalk: ^4.1.1
     dank-twitch-irc: "Amazeful/dank-twitch-irc#build"
     dotenv: ^10.0.0
+    ioredis: ^4.27.6
     jest: ^27.0.4
     joi: ^17.4.0
     logform: ^2.2.0
@@ -1603,6 +1614,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cluster-key-slot@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "cluster-key-slot@npm:1.1.0"
+  checksum: 3b41b06942f6b0df71029dec9df6a272be2ab78353d60fcdc5a4af3b88a749d7fb2d1d3b092db0108b2bdd104086c03edcaa3b25ef432590bb954981d6cd7715
+  languageName: node
+  linkType: hard
+
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -1922,7 +1940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"denque@npm:^1.4.1":
+"denque@npm:^1.1.0, denque@npm:^1.4.1":
   version: 1.5.0
   resolution: "denque@npm:1.5.0"
   checksum: 3564778cda60c7dee3f1d71e397e50e6b39a8c06118aab9843b9396cb621b3191ab56d13de5237b8beee2b87bec485e8239c58ca3133472d2d1eaa3d2d518022
@@ -2618,6 +2636,24 @@ fsevents@^2.3.2:
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 98426da247ddfc3dcd7d7daedd90c3ca32d5b08deca08949726f12d49232aef94772a07b36cf4ff833e105ae2ef931777f6de4a6dd8245a216b9299ad4a50bea
+  languageName: node
+  linkType: hard
+
+"ioredis@npm:^4.27.6":
+  version: 4.27.6
+  resolution: "ioredis@npm:4.27.6"
+  dependencies:
+    cluster-key-slot: ^1.1.0
+    debug: ^4.3.1
+    denque: ^1.1.0
+    lodash.defaults: ^4.2.0
+    lodash.flatten: ^4.4.0
+    p-map: ^2.1.0
+    redis-commands: 1.7.0
+    redis-errors: ^1.2.0
+    redis-parser: ^3.0.0
+    standard-as-callback: ^2.1.0
+  checksum: 757b8dbd2c1db17d22c54e38be21402f48cf9337fa708a6626581aa104e47ce6d74a76a07e580b515d6ef0f5aa81af199f59d7866f10504235c41a9a29bb779f
   languageName: node
   linkType: hard
 
@@ -3475,6 +3511,20 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"lodash.defaults@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "lodash.defaults@npm:4.2.0"
+  checksum: fde72e71f7b7ece10c24e43dd601574168467d50bc76687302d40de341d5cb8e35b100105d938458747d2ad5f20d8bb736e62523ef39d1a8b40f7307c50f10ac
+  languageName: node
+  linkType: hard
+
+"lodash.flatten@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "lodash.flatten@npm:4.4.0"
+  checksum: f22a7f6f163256d87345b07c76122e03d03abbf943b6c3aa5e5fafb7d5bce765013aedfc2aae7e649af0907287a2cf85de24237dbdd3ecd485a77d56e070b54c
+  languageName: node
+  linkType: hard
+
 "lodash.pickby@npm:^4.6.0":
   version: 4.6.0
   resolution: "lodash.pickby@npm:4.6.0"
@@ -4028,6 +4078,13 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"p-map@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "p-map@npm:2.1.0"
+  checksum: 8557e841ed832a489aaee7d825b7bea73e0559c452578821f5af418f430a8455727ab8dd5b4318b6b6733096029cfa571aa0e8d21bdd2c213025f02f919f7a9a
+  languageName: node
+  linkType: hard
+
 "p-map@npm:^4.0.0":
   version: 4.0.0
   resolution: "p-map@npm:4.0.0"
@@ -4255,6 +4312,29 @@ fsevents@^2.3.2:
     string_decoder: ^1.1.1
     util-deprecate: ^1.0.1
   checksum: f178b1daa80d9e58ebba71dbb08486430aa6f0dea3a22a1b7401f3f6983077d0bc0edea43099db06b8d006c9ad48d6383e8fb72c05d5b187670aeaf1b9b44f00
+  languageName: node
+  linkType: hard
+
+"redis-commands@npm:1.7.0":
+  version: 1.7.0
+  resolution: "redis-commands@npm:1.7.0"
+  checksum: cbf5d33768b1c8e1001e2a7ffdaeb6ef830c538ef812d803a1c5e6038cf03482cf0a22b29eadf1182aa02a522331826e3af0967ae75fa7883da8a139ad2fc77b
+  languageName: node
+  linkType: hard
+
+"redis-errors@npm:^1.0.0, redis-errors@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "redis-errors@npm:1.2.0"
+  checksum: b260bb64a1c8523d32a56701681ac3e5cc6bb0a4eb09f1d30729ebba397021d274216ff189909c08fe3c6b706ec8b74948e20ea410b6f69d31b35bda3fb82a59
+  languageName: node
+  linkType: hard
+
+"redis-parser@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "redis-parser@npm:3.0.0"
+  dependencies:
+    redis-errors: ^1.0.0
+  checksum: 45dbcb05bed2c80a4aac288bbefed2347ecf3508c24d542ab42efa21fd63b5aaca4208b206f05818835a2ac43abe09250c2638c11c3b0b66a5d67e83985e350f
   languageName: node
   linkType: hard
 
@@ -4587,6 +4667,13 @@ resolve@^1.20.0:
   dependencies:
     escape-string-regexp: ^2.0.0
   checksum: 65fe92891beee90473708c119e8d55473996aa11ff073cc59c3f6a0b199b44c1cc7c51425b64a8d0761d1c7c3d9ab8350a6bebff4d32720492cdfb00ee3096f8
+  languageName: node
+  linkType: hard
+
+"standard-as-callback@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "standard-as-callback@npm:2.1.0"
+  checksum: 4d02327de69a3d867b8b4a069213b90ee5db4d09364fea694e3f67f8b1ee909be0724a0c8e8ee220365c972363d318242d97d7dd1c79ccf84b8bb52234be525e
   languageName: node
   linkType: hard
 
