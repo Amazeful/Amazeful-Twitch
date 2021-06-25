@@ -12,24 +12,30 @@ import {
 import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";
-import { ChatClientConfig } from "../config/ChatClientConfig";
 
 @singleton()
 export class ChatClient extends DankClient {
   public massTransportSockets: SingleConnection[];
-  public massTransportPoolSize: number;
-
+  public massTransportPoolSize: number = 100;
   constructor() {
-    super(ChatClientConfig);
-    this.massTransportPoolSize = ChatClientConfig.poolSize;
+    super({
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
+      rateLimits: process.env.BOTSTATUS,
+      installDefaultMixins: true,
+      maxChannelCountPerConnection: 200,
+      connectionRateLimits: {
+        parallelConnections: 100,
+        releaseTime: 2000,
+      },
+    });
+
     this.use(new AlternateMessageModifier(this));
     this.use(new SlowModeRateLimiter(this));
     this.massTransportSockets = [];
-
     for (var i = 0; i < this.massTransportPoolSize; i++) {
       this.newMassTransportSocket();
     }
-
     this.on("close", () => {
       this.massTransportSockets.forEach((conn) => conn.close());
     });
