@@ -1,5 +1,5 @@
 import { Audit } from "../Audit";
-import { setupORM, getORM } from "./setup.test";
+import { setupORM, getORM, getId } from "../../jest.setup";
 import { AuditLogCategory } from "../../types/AuditLogCategory";
 import { Roles } from "../../types/Roles";
 

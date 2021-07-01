@@ -1,7 +1,8 @@
-import { Connection, IDatabaseDriver, MikroORM } from "@mikro-orm/core";
+import "reflect-metadata";
+import { MikroORM } from "@mikro-orm/core";
 import { MongoDriver } from "@mikro-orm/mongodb";
 
-var orm: MikroORM<IDatabaseDriver<Connection>>;
+var orm: MikroORM<MongoDriver>;
 var id = 0;
 export async function setupORM() {
   orm = await MikroORM.init<MongoDriver>({
@@ -16,7 +17,8 @@ export async function setupORM() {
       ssl: false,
     },
   });
-  var driver = orm.em.getDriver() as MongoDriver;
+
+  var driver = orm.em.getDriver();
 
   await driver.dropCollections();
   await driver.ensureIndexes();

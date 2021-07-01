@@ -1,4 +1,4 @@
-import { setupORM, getORM } from "./setup.test";
+import { setupORM, getORM, getId } from "../../jest.setup";
 import { Command } from "../Command";
 import { Timer } from "../embeddables/Timer";
 import { StreamStatus } from "../../types/StreamStatus";

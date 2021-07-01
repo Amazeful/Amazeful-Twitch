@@ -1,4 +1,4 @@
-import { setupORM, getORM, getId } from "./setup.test";
+import { setupORM, getORM, getId } from "../../jest.setup";
 import { Channel } from "../Channel";
 import { ObjectId } from "mongodb";
 import { User } from "../User";

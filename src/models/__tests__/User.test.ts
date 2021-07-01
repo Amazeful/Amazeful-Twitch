@@ -1,7 +1,6 @@
-import { setupORM, getORM, getId } from "./setup.test";
+import { setupORM, getORM, getId } from "../../jest.setup";
 import { User } from "../User";
 import { Channel } from "../Channel";
-import { Collection } from "@mikro-orm/core";
 beforeAll(async () => {
   return setupORM();
 });
@@ -83,5 +82,43 @@ describe("./models/User", () => {
     expect(myUser.primaryChannel!.channelID).toStrictEqual(
       user.primaryChannel.channelID
     );
+  });
+
+  test("must rehyrdrate user", async () => {
+    var orm = await getORM();
+    let repository = orm.em.getRepository(User);
+    let id = getId();
+
+    let user = new User({
+      userID: id,
+      login: "amazeful",
+      displayName: "Amazeful",
+      type: "staff",
+      broadcasterType: "partner",
+      description: "just a random text",
+      profileImageURL: "https://example.com/img.jpg",
+      offlineImageURL: "https://example.com/img.jpg",
+      viewCount: 1000,
+    });
+
+    await repository.persistAndFlush(user);
+
+    var jsonUser = JSON.parse(JSON.stringify(user));
+    orm.em.clear();
+
+    console.log(jsonUser);
+
+    var user2 = repository.merge(jsonUser);
+
+    user2.displayName = "John Doe";
+
+    await repository.flush();
+
+    orm.em.clear();
+
+    var myUser = await repository.findOneOrFail({ userID: jsonUser.userID });
+
+    expect(user2.testFunc()).toBe(1000);
+    expect(myUser.displayName).toBe("John Doe");
   });
 });

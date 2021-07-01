@@ -1,4 +1,4 @@
-import { setupORM, getORM } from "./setup.test";
+import { setupORM, getORM, getId } from "../../jest.setup";
 import { Question } from "../Question";
 import { TriviaCategory } from "../../types/TriviaCategory";
 beforeAll(async () => {
