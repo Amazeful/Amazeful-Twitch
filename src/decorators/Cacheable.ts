@@ -7,7 +7,7 @@ import { Logger, LogLevel } from "../utils/Logger";
 
 //Cacheable marks a method as cachebale.
 //Returns method value from the cache if available, otherwise caches the result.
-//It also accepts an entity type in config, hydrated entity using json value from cache, and returns an object of that entity type.
+//It also accepts an entity type in config, hydrates entity using json value from cache, and returns an object of that entity type.
 export const Cacheable =
   (config: CacheableConfig): CacheableMethodDecorator =>
   (target, propertyKey, descriptor) => {
