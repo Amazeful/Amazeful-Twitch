@@ -1,4 +1,3 @@
-import { PrivmsgMessage } from "dank-twitch-irc";
 import { Module } from "../modules/Module";
 
 //Defines an object constructor type
