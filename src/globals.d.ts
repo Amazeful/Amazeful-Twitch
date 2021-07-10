@@ -1,5 +1,3 @@
-import { Bot } from "./src/core/Bot";
-
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -9,5 +7,4 @@ declare global {
       PASSWORD: string;
     }
   }
-  var bot: Bot;
 }

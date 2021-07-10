@@ -4,6 +4,7 @@ import { Channel } from "./ChannelBot";
 import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
 import { Agenda } from "../services/Agenda";
+import { ORM } from "../services/ORM";
 
 /**
  * Class Bot defines global Twitch bot instance
@@ -11,6 +12,7 @@ import { Agenda } from "../services/Agenda";
  * All components are accessable through this class
  */
 export class Bot {
+  @AutoWired private readonly _orm!: ORM;
   @AutoWired private readonly _agenda!: Agenda;
   @AutoWired private readonly _client!: ChatClient;
   private _channelBots: Map<number, Channel>;
@@ -25,6 +27,7 @@ export class Bot {
   @DebugLogger
   public async init() {
     try {
+      await this._orm.connect();
       await this._agenda.start();
       await this._client.connect();
     } catch (e) {

@@ -78,4 +78,8 @@ export class User extends BaseModel {
     this.offlineImageURL = userDetails.offlineImageURL;
     this.viewCount = userDetails.viewCount;
   }
+
+  public testFunc() {
+    return 1000;
+  }
 }
