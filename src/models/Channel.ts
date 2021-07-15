@@ -54,6 +54,9 @@ export class Channel extends BaseModel {
   @Property()
   endedAt?: Date;
 
+  @Property()
+  moderator: boolean = false;
+
   @OneToOne({ entity: () => User, mappedBy: "primaryChannel" })
   owner?: User;
 
