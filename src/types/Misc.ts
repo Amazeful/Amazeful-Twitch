@@ -26,3 +26,5 @@ export type CommandHandlerDecorator = (
   propertyKey: string,
   descriptor: TypedPropertyDescriptor<CommandHandlerType>
 ) => void;
+
+export type MessageHandlerType = ()
