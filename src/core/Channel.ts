@@ -1,21 +1,18 @@
 import { Channel as ChannelData } from "../models/Channel";
 import { Module } from "../modules/Module";
 import { promises as fs } from "fs";
-import { join } from "path";
-
-import { Bot } from "./Bot";
 
 /**
  * Channel is a bot instance for an individual channel.
  * All channel modules are initialized in this class
  */
 export class Channel {
-  private _data: ChannelData;
-  private _modules: Record<string, Module>;
+  private data: ChannelData;
+  private modules: Record<string, Module>;
 
   constructor(data: ChannelData) {
-    this._data = data;
-    this._modules = {};
+    this.data = data;
+    this.modules = {};
   }
 
   public async init() {}

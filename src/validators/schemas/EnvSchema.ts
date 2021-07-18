@@ -9,6 +9,9 @@ export const EnvSchema = Joi.object({
     .valid("default", "knownBot", "verifiedBot"),
   USERNAME: Joi.string().required(),
   PASSWORD: Joi.string().required(),
+  CLIENT_ID: Joi.string().required(),
+  CLIENT_SECRET: Joi.string().required(),
+  SHARD_ID: Joi.number().integer(),
 })
   .required()
   .label("env file");

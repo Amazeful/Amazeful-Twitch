@@ -1,7 +1,7 @@
 import { Module } from "../../modules/Module";
 import { RegisterModule } from "../RegisterModule";
 import { CHANNEL_MODULE } from "../../utils/Constants";
-import { Channel } from "../../core/ChannelBot";
+import { Channel } from "../../core/Channel";
 jest.mock("../../modules/Module.ts");
 @RegisterModule()
 class TestModule extends Module {

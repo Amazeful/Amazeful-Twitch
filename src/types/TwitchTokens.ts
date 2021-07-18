@@ -1,6 +1,5 @@
 //TwitchData includes required twitch information
-export interface TwitchData {
-  botStatus: "default" | "knownBot" | "verifiedBot";
+export interface TwitchTokens {
   username: string;
   password: string;
   clientID: string;

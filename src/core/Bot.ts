@@ -1,6 +1,6 @@
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";
-import { Channel } from "./ChannelBot";
+import { Channel } from "./Channel";
 import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
 import { Agenda } from "../services/Agenda";

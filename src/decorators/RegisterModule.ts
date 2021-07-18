@@ -1,6 +1,6 @@
 import { Module } from "../modules/Module";
 import { Constructor } from "../types/Misc";
-import { Channel } from "../core/ChannelBot";
+import { Channel } from "../core/Channel";
 import { CHANNEL_MODULE } from "../utils/Constants";
 
 //RegisterModule adds a module to Channel class metadata
