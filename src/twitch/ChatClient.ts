@@ -16,7 +16,7 @@ import { Logger, LogLevel } from "../utils/Logger";
 @singleton()
 export class ChatClient extends DankClient {
   public massTransportSockets: SingleConnection[];
-  public massTransportPoolSize: number = 100;
+  public massTransportPoolSize: number = 5;
   constructor() {
     super({
       username: process.env.USERNAME,
@@ -29,6 +29,8 @@ export class ChatClient extends DankClient {
         releaseTime: 2000,
       },
     });
+
+    console.log(process.env.PASSWORD);
 
     this.use(new AlternateMessageModifier(this));
     this.use(new SlowModeRateLimiter(this));

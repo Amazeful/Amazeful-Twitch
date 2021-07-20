@@ -27,8 +27,6 @@ export class Bot {
   @DebugLogger
   public async init() {
     try {
-      await this._orm.connect();
-      await this._agenda.start();
       await this._client.connect();
     } catch (e) {
       Logger.log(
