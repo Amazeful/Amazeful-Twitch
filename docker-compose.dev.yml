@@ -12,6 +12,8 @@ services:
     command: /bin/bash
     tty: true
     stdin_open: true
+    volumes:
+      - ~/Amazeful-Twitch:/home/Amazeful-Twitch
     depends_on:
       - mongo
       - redis
