@@ -6,8 +6,3 @@ export enum HandlerTypes {
   HOST = "Handler::Host",
   COMMUNITY_GIFT = "Handler::CommunityGift",
 }
-
-export interface HandlerOptions {
-    type: HandlerTypes,
-    handler: 
-}
