@@ -7,15 +7,16 @@ export class ORM extends MikroORM<MongoDriver> {
   constructor() {
     super({
       entities: ["./src/models/*.ts", "./src/models/embeddables/*.ts"],
-      dbName: "Amazeful",
+      dbName:
+        process.env.NODE_ENV === "production" ? "Amazeful" : "AmazefulDev",
       type: "mongo",
-      ensureIndexes: true,
+      ensureIndexes: process.env.NODE_ENV === "production",
       useBatchInserts: true,
       useBatchUpdates: true,
 
       driverOptions: {
-        poolSize: 100,
-        ssl: false,
+        poolSize: process.env.NODE_ENV === "production" ? 100 : 5,
+        ssl: process.env.NODE_ENV === "production",
       },
     });
   }

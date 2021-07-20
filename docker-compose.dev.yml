@@ -1,0 +1,28 @@
+version: "3.4"
+
+services:
+  amazeful-twitch:
+    image: amazeful-twitch
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+      MONGO_INITDB_DATABASE: AmazefulDev
+    command: /bin/bash
+    tty: true
+    stdin_open: true
+    depends_on:
+      - mongo
+      - redis
+  mongo:
+    image: mongo:4.4
+    restart: always
+    ports:
+      - 27017:27017
+
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
