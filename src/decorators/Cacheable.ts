@@ -40,18 +40,11 @@ export const Cacheable =
 
       var result = await originalMethod.apply(this, args);
 
-      cacheManger
-        .cache({
-          key: config.key,
-          value: JSON.stringify(result),
-          expiry: config.expiry,
-        })
-        .catch((e) => {
-          Logger.log(
-            LogLevel.ERROR,
-            `Failed to set cache for key ${config.key}: ${e}`
-          );
-        });
+      cacheManger.cache({
+        key: config.key,
+        value: JSON.stringify(result),
+        expiry: config.expiry,
+      });
 
       return result;
     };
