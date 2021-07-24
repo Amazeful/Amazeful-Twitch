@@ -13,10 +13,12 @@ import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";
 
+//TODO: Kill process if sockets keep failing
 @singleton()
 export class ChatClient extends DankClient {
   public massTransportSockets: SingleConnection[];
-  public massTransportPoolSize: number = 5;
+  public massTransportPoolSize: number =
+    process.env.NODE_ENV === "development" ? 5 : 100;
   constructor() {
     super({
       username: process.env.USERNAME,
@@ -25,12 +27,10 @@ export class ChatClient extends DankClient {
       installDefaultMixins: true,
       maxChannelCountPerConnection: 200,
       connectionRateLimits: {
-        parallelConnections: 100,
+        parallelConnections: 5,
         releaseTime: 2000,
       },
     });
-
-    console.log(process.env.PASSWORD);
 
     this.use(new AlternateMessageModifier(this));
     this.use(new SlowModeRateLimiter(this));
