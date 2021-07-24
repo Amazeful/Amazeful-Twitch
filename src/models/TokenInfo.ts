@@ -2,7 +2,7 @@ import { Entity, Property, Unique } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
 
 @Entity()
-export class BotData extends BaseModel {
+export class TokenInfo extends BaseModel {
   @Unique()
   @Property()
   shardID!: number;
@@ -14,5 +14,8 @@ export class BotData extends BaseModel {
   refreshToken!: string;
 
   @Property()
-  expirey?: number;
+  expirey!: number;
+
+  @Property()
+  tokenObtainTime!: Date;
 }

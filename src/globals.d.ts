@@ -10,6 +10,8 @@ declare global {
       PASSWORD: string;
       CLIENT_ID: string;
       CLIENT_SECRET: string;
+      ACCESS_TOKEN: string;
+      REFRESH_TOKEN: string;
     }
   }
 }
