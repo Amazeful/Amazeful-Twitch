@@ -5,20 +5,24 @@ import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
 import { Agenda } from "../services/Agenda";
 import { ORM } from "../services/ORM";
+import { Twitch } from "../twitch/Twitch";
+import { singleton } from "tsyringe";
 
 /**
  * Class Bot defines global Twitch bot instance
  * Serves as an entry point for all channelbots
  * All components are accessable through this class
  */
+@singleton()
 export class Bot {
-  @AutoWired private readonly _orm!: ORM;
-  @AutoWired private readonly _agenda!: Agenda;
-  @AutoWired private readonly _client!: ChatClient;
-  private _channelBots: Map<number, Channel>;
+  @AutoWired private orm!: ORM;
+  @AutoWired private agenda!: Agenda;
+  @AutoWired private client!: ChatClient;
+  @AutoWired private twitch!: Twitch;
+  private channelBots: Map<number, Channel>;
 
   constructor() {
-    this._channelBots = new Map();
+    this.channelBots = new Map();
   }
 
   /**
@@ -27,7 +31,16 @@ export class Bot {
   @DebugLogger
   public async init() {
     try {
-      await this._client.connect();
+      console.log(process.env);
+      //ORM always first
+      await this.orm.init();
+
+      await this.twitch.init();
+
+      await this.client.connect();
+
+      let channel = new Channel();
+      await channel.init();
     } catch (e) {
       Logger.log(
         LogLevel.ERROR,

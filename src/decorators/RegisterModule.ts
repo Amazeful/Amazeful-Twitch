@@ -1,4 +1,4 @@
-import { Module } from "../modules/Module";
+import { Module } from "../types/Module";
 import { Constructor } from "../types/Misc";
 import { Channel } from "../core/Channel";
 import { CHANNEL_MODULE } from "../utils/Constants";
@@ -6,7 +6,7 @@ import { CHANNEL_MODULE } from "../utils/Constants";
 //RegisterModule adds a module to Channel class metadata
 export const RegisterModule =
   (): ((target: Constructor<Module>) => void) => (target) => {
-    const existingModules =
+    const existingModules: Constructor<Module>[] =
       Reflect.getOwnMetadata(CHANNEL_MODULE, Channel) || [];
     existingModules.push(target);
 

@@ -14,7 +14,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "start": "yarn tsc && node ./bin/index.js"
+    "start": "yarn tsc && node ./bin/index.js",
+    "dev": "yarn ts-node ./src/main.ts"
   },
   "dependencies": {
     "@mikro-orm/core": "^4.5.7",

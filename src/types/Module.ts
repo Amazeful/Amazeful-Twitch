@@ -1,6 +1,6 @@
 import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
-import { DefaultCommandOptions } from "../types/DefaultCommandOptions";
+import { DefaultCommandOptions } from "./DefaultCommandOptions";
 import { COMMAND_HANDLER } from "../utils/Constants";
 export abstract class Module {
   protected channelId: number;

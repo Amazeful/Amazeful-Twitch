@@ -1,4 +1,4 @@
-import { Module } from "../modules/Module";
+import { Module } from "./Module";
 
 //Defines an object constructor type
 export type Constructor<T> = {

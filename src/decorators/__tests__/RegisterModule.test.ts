@@ -1,4 +1,4 @@
-import { Module } from "../../modules/Module";
+import { Module } from "../../types/Module";
 import { RegisterModule } from "../RegisterModule";
 import { CHANNEL_MODULE } from "../../utils/Constants";
 import { Channel } from "../../core/Channel";

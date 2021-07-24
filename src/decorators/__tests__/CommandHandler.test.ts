@@ -1,5 +1,5 @@
 import { RegisterCommand } from "../RegisterCommand";
-import { Module } from "../../modules/Module";
+import { Module } from "../../types/Module";
 import { COMMAND_HANDLER } from "../../utils/Constants";
 import { DefaultCommandOptions } from "../../types/DefaultCommandOptions";
 import { Roles } from "../../types/Roles";

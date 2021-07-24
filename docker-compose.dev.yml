@@ -7,8 +7,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     environment:
-      NODE_ENV: development
-      MONGO_INITDB_DATABASE: AmazefulDev
+      - NODE_ENV=development
+      - MONGO_INITDB_DATABASE=AmazefulDev
+      - MIKRO_ORM_CLIENT_URL=mongodb://mongo:27017
+      - MIKRO_ORM_DB_NAME=AmazefulDev
     command: /bin/bash
     tty: true
     stdin_open: true
@@ -19,12 +21,12 @@ services:
       - redis
   mongo:
     image: mongo:4.4
-    restart: always
+    restart: unless-stopped
     ports:
       - 27017:27017
 
   redis:
     image: redis:latest
-    restart: always
+    restart: unless-stopped
     ports:
       - 6379:6379
