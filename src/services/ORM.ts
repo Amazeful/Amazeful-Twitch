@@ -1,16 +1,19 @@
-import { MikroORM } from "@mikro-orm/core";
+import { ConfigurationLoader, MikroORM } from "@mikro-orm/core";
 import { MongoDriver } from "@mikro-orm/mongodb";
 import { singleton } from "tsyringe";
+import { DebugLogger } from "../decorators/DebugLogger";
 
 @singleton()
-export class ORM extends MikroORM<MongoDriver> {
-  constructor() {
-    super({
+export class ORM {
+  private mikroORM!: MikroORM<MongoDriver>;
+
+  @DebugLogger
+  public async init() {
+    this.mikroORM = await MikroORM.init({
       entities: ["./src/models/*.ts", "./src/models/embeddables/*.ts"],
-      dbName:
-        process.env.NODE_ENV === "production" ? "Amazeful" : "AmazefulDev",
+      dbName: "Amazeful",
       type: "mongo",
-      ensureIndexes: process.env.NODE_ENV === "production",
+      ensureIndexes: true,
       useBatchInserts: true,
       useBatchUpdates: true,
 
@@ -19,5 +22,13 @@ export class ORM extends MikroORM<MongoDriver> {
         ssl: process.env.NODE_ENV === "production",
       },
     });
+  }
+
+  public get em() {
+    return this.mikroORM.em;
+  }
+
+  public async close() {
+    return await this.mikroORM.close();
   }
 }
