@@ -4,6 +4,7 @@ import { Channel } from "../core/Channel";
 import { CHANNEL_MODULE } from "../utils/Constants";
 
 //RegisterModule adds a module to Channel class metadata
+//A registrable module MUST extend types/Module
 export const RegisterModule =
   (): ((target: Constructor<Module>) => void) => (target) => {
     const existingModules: Constructor<Module>[] =

@@ -1,13 +1,13 @@
 import { AutoWired } from "../decorators/AutoWired";
+import { Channel } from "../models/Channel";
 import { ChatClient } from "../twitch/ChatClient";
-import { DefaultCommandOptions } from "./DefaultCommandOptions";
-import { COMMAND_HANDLER } from "../utils/Constants";
 export abstract class Module {
-  protected channelId: number;
-  @AutoWired protected readonly chatClient!: ChatClient;
+  @AutoWired protected chatClient!: ChatClient;
 
-  constructor(channelId: number) {
-    this.channelId = channelId;
+  protected readonly channelData: Channel;
+
+  constructor(channelData: Channel) {
+    this.channelData = channelData;
   }
 
   protected abstract destroy(): void;

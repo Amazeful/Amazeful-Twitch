@@ -26,3 +26,14 @@ export type CommandHandlerDecorator = (
   propertyKey: string,
   descriptor: TypedPropertyDescriptor<CommandHandlerType>
 ) => void;
+
+// VariableResolverType defines a type of a method that resolves custom variable values
+export type VariableResolverType = (...args: any[]) => Promise<string>;
+
+// VariableResolverDecorator defines a type for custom variable resolver method decorator
+// Variable resolver method must be an async function that returns a string
+export type VariableResolverDecorator = (
+  target: Module,
+  propertyKey: string,
+  descriptor: TypedPropertyDescriptor<VariableResolverType>
+) => void;
