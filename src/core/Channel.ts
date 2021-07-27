@@ -2,7 +2,6 @@ import { Channel as ChannelData } from "../models/Channel";
 import { Module } from "../types/Module";
 import { promises as fs } from "fs";
 import { resolve } from "path";
-import { ApiClient } from "@twurple/api";
 import { CHANNEL_MODULE } from "../utils/Constants";
 import { Constructor } from "../types/Misc";
 
@@ -11,6 +10,8 @@ import { Constructor } from "../types/Misc";
  * All channel modules are initialized in this class
  */
 export class Channel {
+  public static moduleContainer: Constructor<Module>[] = [];
+
   private modules: Record<string, Module>;
   private botStatus?: "mod" | "vip";
 
@@ -33,12 +34,7 @@ export class Channel {
       await import(resolve(modulesDir, file));
     }
 
-    let modules: Constructor<Module>[] = Reflect.getOwnMetadata(
-      CHANNEL_MODULE,
-      Channel
-    );
-
-    for (let module of modules) {
+    for (let module of Channel.moduleContainer) {
       this.modules[module.name] = new module();
     }
   }
