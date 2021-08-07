@@ -1,5 +1,5 @@
 # Amazeful-Twitch
-> The all new amazefulbot version 2.
+> The all new amazefulbot version 2. Now fully open source.
 
 Work in Progress
 
