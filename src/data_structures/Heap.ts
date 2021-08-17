@@ -2,8 +2,8 @@ import { ComperatorFunc } from "../types/DecoratorTypes";
 
 //Heap defines a heap data structure
 export class Heap<T> {
-  private items: T[];
-  private comperator: ComperatorFunc<T>;
+  protected items: T[];
+  protected comperator: ComperatorFunc<T>;
 
   constructor(comperator: ComperatorFunc<T>) {
     this.comperator = comperator;
