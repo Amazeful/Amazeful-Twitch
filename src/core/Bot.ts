@@ -31,16 +31,12 @@ export class Bot {
   @DebugLogger
   public async init() {
     try {
-      console.log(process.env);
       //ORM always first
       await this.orm.init();
-
       await this.twitch.init();
-
       await this.client.connect();
 
-      let channel = new Channel();
-      await channel.init();
+      Logger.log(LogLevel.INFO, "All services are now running");
     } catch (e) {
       Logger.log(
         LogLevel.ERROR,
