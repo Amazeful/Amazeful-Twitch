@@ -4,11 +4,12 @@ import { ChatClient } from "../twitch/ChatClient";
 export abstract class Module {
   @AutoWired protected chatClient!: ChatClient;
 
-  protected readonly channelData: Channel;
+  protected channelData: Channel;
 
   constructor(channelData: Channel) {
     this.channelData = channelData;
   }
 
-  protected abstract destroy(): void;
+  protected abstract init(): Promise<void>;
+  protected abstract destroy(): Promise<void>;
 }

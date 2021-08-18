@@ -1,4 +1,4 @@
-import { ComperatorFunc } from "../types/DecoratorTypes";
+import { ComperatorFunc } from "../types/Misc";
 
 //Heap defines a heap data structure
 export class Heap<T> {

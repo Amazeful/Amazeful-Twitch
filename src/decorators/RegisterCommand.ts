@@ -1,4 +1,4 @@
-import { CommandHandlerDecorator, Constructor } from "../types/Misc";
+import { CommandHandlerDecorator } from "../types/DecoratorTypes";
 import { COMMAND_HANDLER } from "../utils/Constants";
 import { DefaultCommandOptions } from "../types/DefaultCommandOptions";
 import { Roles } from "../types/Roles";

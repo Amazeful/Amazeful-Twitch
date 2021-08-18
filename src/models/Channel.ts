@@ -62,10 +62,4 @@ export class Channel extends BaseModel {
 
   @ManyToMany({ entity: () => User, inversedBy: "manages", nullable: true })
   managers = new Collection<User>(this);
-
-  constructor(channelID: number) {
-    super();
-
-    this.channelID = channelID;
-  }
 }
