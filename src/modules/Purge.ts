@@ -3,20 +3,26 @@ import { Channel } from "../models/Channel";
 import { Module } from "../types/Module";
 import { PrivmsgMessage } from "dank-twitch-irc";
 import { RegisterMessageHandler } from "../decorators/RegisterMessageHandler";
+import { LinkedList } from "../data_structures/LinkedList";
 
 export interface PurgeMessageData {
   id: string;
   sender: string;
   message: string;
-  timeStamp: number;
+  timeStamp: number; //unix timestamp
 }
 
 @RegisterModule()
 export class Purge extends Module {
-  private messages: PurgeMessageData[];
+  //A linked list is the best structure for purge since it allows insertation and deletion at both ends in constant time (O(1))
+  private messages: LinkedList<PurgeMessageData>;
   constructor(channelData: Channel) {
     super(channelData);
-    this.messages = [];
+    this.messages = new LinkedList();
+  }
+
+  protected init(): Promise<void> {
+    throw new Error("Method not implemented.");
   }
 
   @RegisterMessageHandler()
@@ -29,9 +35,6 @@ export class Purge extends Module {
     });
   }
 
-  protected init(): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
   protected destroy(): Promise<void> {
     throw new Error("Method not implemented.");
   }
