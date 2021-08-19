@@ -1,4 +1,4 @@
-import { CacheableMethodDecorator } from "../types/DecoratorTypes";
+import { CacheableMethodDecorator } from "../types/Decorators";
 import { CacheableConfig } from "../types/CacheableConfig";
 import { container } from "tsyringe";
 import { CacheManager } from "../services/CahceManager";
