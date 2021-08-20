@@ -13,12 +13,15 @@ import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";
 
-//TODO: Kill process if sockets keep failing
 @singleton()
 export class ChatClient extends DankClient {
-  public massTransportSockets: SingleConnection[];
-  public massTransportPoolSize: number =
+  private massTransportSockets: SingleConnection[];
+  private massTransportPoolSize: number =
     process.env.NODE_ENV === "development" ? 5 : 100;
+
+  private maxRetries = 30;
+  private retryTimeout?: NodeJS.Timeout;
+  private currentRetires = 0;
   constructor() {
     super({
       username: process.env.USERNAME,
@@ -35,6 +38,11 @@ export class ChatClient extends DankClient {
     this.use(new AlternateMessageModifier(this));
     this.use(new SlowModeRateLimiter(this));
     this.massTransportSockets = [];
+    this.createTransportSockets();
+  }
+
+  @DebugLogger
+  private createTransportSockets() {
     for (var i = 0; i < this.massTransportPoolSize; i++) {
       this.newMassTransportSocket();
     }
@@ -44,7 +52,7 @@ export class ChatClient extends DankClient {
   }
 
   @DebugLogger
-  public newMassTransportSocket(): SingleConnection {
+  private newMassTransportSocket(): SingleConnection {
     if (this.massTransportSockets.length > this.massTransportPoolSize)
       return this.requireMassTransportSocket();
     const conn = new SingleConnection(this.configuration);
@@ -68,6 +76,7 @@ export class ChatClient extends DankClient {
         !this.closed &&
         this.massTransportSockets.length < this.massTransportPoolSize
       ) {
+        this.activateRetryInterval();
         this.newMassTransportSocket();
       }
     });
@@ -78,6 +87,11 @@ export class ChatClient extends DankClient {
 
     this.massTransportSockets.push(conn);
     return conn;
+  }
+
+  public async reconnect() {
+    this.createTransportSockets();
+    await this.connect();
   }
 
   public async privmsg(
@@ -108,5 +122,26 @@ export class ChatClient extends DankClient {
     if (!con) return this.newMassTransportSocket();
     this.massTransportSockets.push(con);
     return con;
+  }
+
+  private activateRetryInterval() {
+    if (this.retryTimeout) {
+      this.currentRetires++;
+      if (this.currentRetires === this.maxRetries) {
+        Logger.log(
+          LogLevel.ERROR,
+          `Max retries reached. Disconnecting client.`
+        );
+        this.close();
+      }
+      return;
+    }
+
+    this.retryTimeout = setTimeout(this.clearInterval, 30000);
+  }
+
+  private clearInterval() {
+    if (this.retryTimeout) clearTimeout(this.retryTimeout);
+    this.retryTimeout = undefined;
   }
 }
