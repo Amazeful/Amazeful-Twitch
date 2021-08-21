@@ -5,6 +5,20 @@ __metadata:
   version: 4
   cacheKey: 7
 
+"@aidenhadisi/doublylinkedlist@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@aidenhadisi/doublylinkedlist@npm:1.0.0"
+  checksum: 58c369bcfdfc01fc11b0a2c24ed261c975d8f4534ef5722e34332826154651736bb5960eb438dfc9c6f78127f7ed7fd265332aa608f71df3ee6bb76e2de2a1d7
+  languageName: node
+  linkType: hard
+
+"@aidenhadisi/heapqueue@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "@aidenhadisi/heapqueue@npm:1.1.0"
+  checksum: 019786dc96279da8676535e58e7beb2d36ca86d91cb58d6d1248f0a0868b610d348b3696da9d4fdf0d9f5565f973d3b6c0250220e352996b18357febb54cc9c5
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.12.13":
   version: 7.12.13
   resolution: "@babel/code-frame@npm:7.12.13"
@@ -1301,6 +1315,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "amazeful-twitch@workspace:."
   dependencies:
+    "@aidenhadisi/doublylinkedlist": ^1.0.0
+    "@aidenhadisi/heapqueue": ^1.1.0
     "@mikro-orm/core": ^4.5.7
     "@mikro-orm/mongodb": ^4.5.7
     "@twurple/api": ^5.0.0-pre.11
