@@ -16,7 +16,7 @@ describe("./decorators/CommandHandler", () => {
         throw new Error("Method not implemented.");
       }
       @RegisterCommand({})
-      public async test(sender: string, args: string[]): Promise<string> {
+      public async test(_: string, _1: string[]): Promise<string> {
         return this.testString;
       }
     }

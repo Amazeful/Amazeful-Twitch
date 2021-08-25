@@ -15,7 +15,7 @@ export const Cacheable =
     descriptor.value = async function name(...args: any[]) {
       let cacheManger = container.resolve(CacheManager);
       if (!config.key) {
-        config.key = `${propertyKey}/${args
+        config.key = `${target.constructor.name}/${propertyKey}/${args
           .map((arg) => arg.toString())
           .join(":")}`;
       }

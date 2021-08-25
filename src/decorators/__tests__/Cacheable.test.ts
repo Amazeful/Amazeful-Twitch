@@ -3,9 +3,6 @@ import { mocked } from "ts-jest/utils";
 import { CacheManager } from "../../services/CahceManager";
 import { Cacheable } from "../Cacheable";
 import { CacheSetConfig } from "../../types/CacheSetConfig";
-import { ORM } from "../../services/ORM";
-import { User } from "../../models/User";
-import { container } from "tsyringe";
 
 jest.mock("../../services/CahceManager");
 
@@ -43,7 +40,7 @@ describe("./decorators/Cacheable", () => {
     const mockedCache = jest.fn();
     CacheManager.prototype.cache = mockedCache;
     const expected: CacheSetConfig = {
-      key: "cacheableMethod/",
+      key: "Test/cacheableMethod/",
       value: JSON.stringify("test"),
       expiry: 100,
     };
@@ -64,8 +61,8 @@ describe("./decorators/Cacheable", () => {
     var result = await test.cacheableMethod();
     result = await test.cacheableMethod();
     expect(mockedGet).toBeCalledTimes(2);
-    expect(mockedGet.mock.calls[0][0]).toBe("cacheableMethod/");
-    expect(mockedGet.mock.calls[1][0]).toBe("cacheableMethod/");
+    expect(mockedGet.mock.calls[0][0]).toBe("Test/cacheableMethod/");
+    expect(mockedGet.mock.calls[1][0]).toBe("Test/cacheableMethod/");
     expect(mockedGet.mock.results[0].value).toBe(null);
     expect(mockedGet.mock.results[1].value).toBe(JSON.stringify("test"));
     expect(result).toBe("test");
@@ -91,8 +88,8 @@ describe("./decorators/Cacheable", () => {
     var result = await test.cacheableObject("John", "Doe", 20);
     result = await test.cacheableObject("John", "Doe", 20);
     expect(mockedGet).toBeCalledTimes(2);
-    expect(mockedGet.mock.calls[0][0]).toBe("cacheableObject/John:Doe:20");
-    expect(mockedGet.mock.calls[1][0]).toBe("cacheableObject/John:Doe:20");
+    expect(mockedGet.mock.calls[0][0]).toBe("Test/cacheableObject/John:Doe:20");
+    expect(mockedGet.mock.calls[1][0]).toBe("Test/cacheableObject/John:Doe:20");
     expect(mockedGet.mock.results[0].value).toBe(null);
     expect(mockedGet.mock.results[1].value).toBe(JSON.stringify(expected));
     expect(result).toEqual(expected);

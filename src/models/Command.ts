@@ -13,13 +13,13 @@ import { Timer } from "./embeddables/Timer";
 import { CommandAttributes } from "./embeddables/CommandAttributes";
 
 @Entity()
-@Unique({ properties: ["name", "channelID"] })
+@Unique({ properties: ["name", "channel"] })
 export class Command extends BaseModel {
   @Property()
   name!: string;
 
   @Property()
-  channelID!: number;
+  channel!: number;
 
   @Property()
   enabled: boolean = true;
@@ -50,11 +50,4 @@ export class Command extends BaseModel {
 
   @Embedded({ entity: () => CommandAttributes })
   attributes: CommandAttributes = new CommandAttributes();
-
-  constructor(name: string, channelID: number, response: string) {
-    super();
-    this.name = name;
-    this.channelID = channelID;
-    this.response = response;
-  }
 }

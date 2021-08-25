@@ -12,7 +12,7 @@ export class CacheManager extends Redis {
     return super.set(data.key, data.value, "PX", data.expiry);
   }
 
-  public async get(key: KeyType): Promise<string | null> {
+  public override async get(key: KeyType): Promise<string | null> {
     this._totalCalled++;
     var result = await super.get(key);
     if (!result) this._totalMiss++;

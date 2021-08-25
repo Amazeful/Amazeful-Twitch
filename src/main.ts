@@ -1,7 +1,7 @@
 import "reflect-metadata";
 
 import { Bot } from "./core/Bot";
-import { EnvSchema } from "./validators/schemas/EnvSchema";
+import { EnvSchema } from "./validators/EnvSchema";
 import * as dotenv from "dotenv";
 import { Logger, LogLevel } from "./utils/Logger";
 (async () => {

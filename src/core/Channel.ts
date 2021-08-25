@@ -1,8 +1,6 @@
-import { Channel as ChannelData } from "../models/Channel";
 import { Module } from "../types/Module";
 import { promises as fs } from "fs";
 import { resolve } from "path";
-import { CHANNEL_MODULE } from "../utils/Constants";
 import { Constructor } from "../types/Misc";
 
 /**
@@ -13,7 +11,6 @@ export class Channel {
   public static moduleContainer: Constructor<Module>[] = [];
 
   private modules: Record<string, Module>;
-  private botStatus?: "mod" | "vip";
 
   constructor() {
     this.modules = {};

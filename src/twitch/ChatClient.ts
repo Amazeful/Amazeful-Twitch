@@ -94,7 +94,7 @@ export class ChatClient extends DankClient {
     await this.connect();
   }
 
-  public async privmsg(
+  public override async privmsg(
     channelName: string,
     message: string,
     fast: boolean = false
@@ -105,7 +105,7 @@ export class ChatClient extends DankClient {
     return sendPrivmsg(this.requireMassTransportSocket(), channelName, message);
   }
 
-  public async say(
+  public override async say(
     channelName: string,
     message: string,
     replyTo?: string,
