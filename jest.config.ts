@@ -1,5 +1,13 @@
-module.exports = {
+export default {
   preset: "ts-jest",
   testEnvironment: "node",
-  setupFilesAfterEnv: ["./src/jest.setup.ts"],
+  clearMocks: true,
+  coverageDirectory: "coverage",
+  collectCoverageFrom: ["src/**/*.ts"],
+  setupFilesAfterEnv: ["jest.setup.ts"],
+  globals: {
+    "ts-jest": {
+      tsConfig: "./tsconfig.jest.json",
+    },
+  },
 };

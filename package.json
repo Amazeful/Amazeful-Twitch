@@ -24,11 +24,6 @@
     "@mikro-orm/mongodb": "^4.5.7",
     "@twurple/api": "^5.0.0-pre.11",
     "@twurple/auth": "^5.0.0-pre.11",
-    "@types/chalk": "^2.2.0",
-    "@types/logform": "^1.10.1",
-    "@types/mongodb": "^3.6.17",
-    "@types/node": "^15.12.1",
-    "@types/winston": "^2.4.4",
     "agenda": "^4.1.3",
     "chalk": "^4.1.1",
     "dank-twitch-irc": "Amazeful/dank-twitch-irc#build",
@@ -44,8 +39,13 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/ioredis": "^4.26.5",
     "@types/jest": "^26.0.24",
+    "@types/logform": "^1.10.1",
+    "@types/mongodb": "^3.6.17",
+    "@types/node": "^16.7.1",
+    "@types/winston": "^2.4.4",
     "jest": "^27.0.6",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0"
