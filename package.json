@@ -18,8 +18,9 @@
     "dev": "yarn ts-node ./src/main.ts"
   },
   "dependencies": {
-    "@aidenhadisi/doublylinkedlist": "^1.0.0",
+    "@aidenhadisi/doublylinkedlist": "^1.4.0",
     "@aidenhadisi/heapqueue": "^1.1.0",
+    "@aidenhadisi/joi-decorators": "^1.3.0",
     "@mikro-orm/core": "^4.5.7",
     "@mikro-orm/mongodb": "^4.5.7",
     "@twurple/api": "^5.0.0-pre.11",

@@ -5,10 +5,10 @@ __metadata:
   version: 4
   cacheKey: 7
 
-"@aidenhadisi/doublylinkedlist@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@aidenhadisi/doublylinkedlist@npm:1.0.0"
-  checksum: 58c369bcfdfc01fc11b0a2c24ed261c975d8f4534ef5722e34332826154651736bb5960eb438dfc9c6f78127f7ed7fd265332aa608f71df3ee6bb76e2de2a1d7
+"@aidenhadisi/doublylinkedlist@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@aidenhadisi/doublylinkedlist@npm:1.4.0"
+  checksum: bd82cfdf8f815009fc28e5e3b67e057f5a663893595731c76fbc69c4689fae8c7baaacffeb8ce53de4bd7e308204ca74672722cf6db6e2c7f041fbd037220f9a
   languageName: node
   linkType: hard
 
@@ -16,6 +16,16 @@ __metadata:
   version: 1.1.0
   resolution: "@aidenhadisi/heapqueue@npm:1.1.0"
   checksum: 019786dc96279da8676535e58e7beb2d36ca86d91cb58d6d1248f0a0868b610d348b3696da9d4fdf0d9f5565f973d3b6c0250220e352996b18357febb54cc9c5
+  languageName: node
+  linkType: hard
+
+"@aidenhadisi/joi-decorators@npm:^1.3.0":
+  version: 1.3.0
+  resolution: "@aidenhadisi/joi-decorators@npm:1.3.0"
+  dependencies:
+    joi: ^17.4.2
+    tslib: ^2.3.1
+  checksum: f6d7d63db01e57579559a4db5b9ff9d9727eaa4afa466bd986d93a1ddc85a5b647879eca4553317818bab8e3feeb6b9e5ef1fbc80587eebab2baa62ac9834111
   languageName: node
   linkType: hard
 
@@ -1322,8 +1332,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "amazeful-twitch@workspace:."
   dependencies:
-    "@aidenhadisi/doublylinkedlist": ^1.0.0
+    "@aidenhadisi/doublylinkedlist": ^1.4.0
     "@aidenhadisi/heapqueue": ^1.1.0
+    "@aidenhadisi/joi-decorators": ^1.3.0
     "@mikro-orm/core": ^4.5.7
     "@mikro-orm/mongodb": ^4.5.7
     "@twurple/api": ^5.0.0-pre.11
@@ -3789,6 +3800,19 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"joi@npm:^17.4.2":
+  version: 17.4.2
+  resolution: "joi@npm:17.4.2"
+  dependencies:
+    "@hapi/hoek": ^9.0.0
+    "@hapi/topo": ^5.0.0
+    "@sideway/address": ^4.1.0
+    "@sideway/formula": ^3.0.0
+    "@sideway/pinpoint": ^2.0.0
+  checksum: 4aee05091f6d1dcd3dd5e9e286cd2b399b8f371327f81f3382750bbcf5c461387ab0c36a3c0377f2a80db6f1f04745a77a4bf8194674643d14ca7d47a079a2b0
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -5480,6 +5504,13 @@ resolve@^1.20.0:
   version: 2.3.0
   resolution: "tslib@npm:2.3.0"
   checksum: 7b4fc9feff0f704743c3760f5d8d708f6417fac6458159e63df3a6b1100f0736e3b99edb9fe370f274ad15160a1f49ff05cb49402534c818ff552c48e38c3e6e
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "tslib@npm:2.3.1"
+  checksum: 5ae2f209c5127bad284974c78916f02c72082615f65889a7ed0c7ca6d5f935c30338a0ee7310e1d9652dabc7b7507fd2905035487446d09d45fc1f19de71cf05
   languageName: node
   linkType: hard
 
