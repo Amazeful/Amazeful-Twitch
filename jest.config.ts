@@ -1,5 +1,6 @@
 export default {
   preset: "ts-jest",
+  modulePathIgnorePatterns: ["<rootDir>/bin", "<rootDir>/node_modules"],
   testEnvironment: "node",
   clearMocks: true,
   coverageDirectory: "coverage",
@@ -7,7 +8,7 @@ export default {
   setupFilesAfterEnv: ["jest.setup.ts"],
   globals: {
     "ts-jest": {
-      tsConfig: "./tsconfig.jest.json",
+      tsConfig: "tsconfig.jest.json",
     },
   },
 };
