@@ -1,9 +1,7 @@
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";
-import { Channel } from "./Channel";
 import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
-import { Agenda } from "../services/Agenda";
 import { ORM } from "../services/ORM";
 import { Twitch } from "../twitch/Twitch";
 import { singleton } from "tsyringe";
@@ -16,14 +14,10 @@ import { singleton } from "tsyringe";
 @singleton()
 export class Bot {
   @AutoWired private orm!: ORM;
-  @AutoWired private agenda!: Agenda;
   @AutoWired private client!: ChatClient;
   @AutoWired private twitch!: Twitch;
-  private channelBots: Map<number, Channel>;
 
-  constructor() {
-    this.channelBots = new Map();
-  }
+  constructor() {}
 
   /**
    * Initializes the global bot object with all necessary modules

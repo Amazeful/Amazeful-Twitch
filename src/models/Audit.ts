@@ -2,13 +2,12 @@ import { Entity, Enum, Index, Property } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
 import { Roles } from "../types/Roles";
 import { AuditLogCategory } from "../types/AuditLogCategory";
-import { AudtiLogAction } from "../types/AuditLogAction";
 
 @Entity()
 @Index({ properties: ["createdAt"], options: { expireAfterSeconds: 864000 } })
 export class Audit extends BaseModel {
   @Property()
-  action!: AudtiLogAction;
+  action!: string;
 
   @Enum(() => AuditLogCategory)
   category!: AuditLogCategory;
@@ -24,7 +23,7 @@ export class Audit extends BaseModel {
 
   constructor(
     category: AuditLogCategory,
-    action: AudtiLogAction,
+    action: string,
     message: string,
     userLevel: Roles,
     username: string
