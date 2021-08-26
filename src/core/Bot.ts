@@ -17,8 +17,6 @@ export class Bot {
   @AutoWired private client!: ChatClient;
   @AutoWired private twitch!: Twitch;
 
-  constructor() {}
-
   /**
    * Initializes the global bot object with all necessary modules
    */
