@@ -9,17 +9,17 @@ export class PurgeConfig extends BaseModel {
   channel!: number;
 
   @Property()
-  enabled: boolean = false;
+  enabled = false;
 
   @Enum(() => Roles)
   minTarget: Roles = Roles.REGUALR;
 
   @Property()
-  defaultContinuous: boolean = false;
+  defaultContinuous = false;
 
   @Property()
-  defaultContinuousTime: number = 60;
+  defaultContinuousTime = 60;
 
   @Property()
-  announceResults: boolean = true;
+  announceResults = true;
 }

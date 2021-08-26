@@ -13,9 +13,12 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.prod.json",
-    "test": "jest",
     "start": "yarn build && node ./bin/index.js",
-    "dev": "yarn ts-node ./src/main.ts"
+    "dev": "yarn ts-node ./src/main.ts",
+    "test": "yarn lint && jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint --ext \".js,.jsx,.ts,.tsx\" \"./src\"",
+    "lint:fix": "eslint --fix --ext \".js,.jsx,.ts,.tsx\" \"./src\""
   },
   "dependencies": {
     "@aidenhadisi/doublylinkedlist": "^1.4.0",
@@ -47,7 +50,13 @@
     "@types/mongodb": "^3.6.17",
     "@types/node": "^16.7.1",
     "@types/winston": "^2.4.4",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.1",
     "jest": "^27.0.6",
+    "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0"
   }

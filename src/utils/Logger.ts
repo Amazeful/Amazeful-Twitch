@@ -2,7 +2,7 @@ import {
   createLogger,
   format,
   transports,
-  Logger as WinstonLogger,
+  Logger as WinstonLogger
 } from "winston";
 import chalk from "chalk";
 
@@ -13,7 +13,7 @@ export enum LogLevel {
   INFO = "info",
   VERBOSE = "verbose",
   DEBUG = "debug",
-  SILLY = "silly",
+  SILLY = "silly"
 }
 
 const LogLevelToEmoji: { [key: string]: string } = {
@@ -21,12 +21,12 @@ const LogLevelToEmoji: { [key: string]: string } = {
   [LogLevel.WARN]: "\u{26A0}\u{FE0F} ",
   [LogLevel.INFO]: "\u{2139}\u{FE0F} ",
   [LogLevel.DEBUG]: "\u{1F41E}",
-  [LogLevel.SILLY]: "\u{1F43E}",
+  [LogLevel.SILLY]: "\u{1F43E}"
 };
 
 const consoleFormat = format.printf(({ level, message, timestamp, module }) => {
-  var upperLevel = ` ${level.toUpperCase()} `;
-  var emoji = LogLevelToEmoji[level];
+  let upperLevel = ` ${level.toUpperCase()} `;
+  const emoji = LogLevelToEmoji[level];
   switch (level) {
     case LogLevel.SILLY:
       message = chalk.magenta(message);
@@ -83,13 +83,13 @@ export class Logger {
       new transports.File({
         filename: `.logs/error.log`,
         level: LogLevel.ERROR,
-        format: format.combine(format.timestamp(), format.splat(), fileFormat),
+        format: format.combine(format.timestamp(), format.splat(), fileFormat)
       }),
       new transports.File({
         filename: `.logs/combined.log`,
-        format: format.combine(format.timestamp(), format.splat(), fileFormat),
-      }),
-    ],
+        format: format.combine(format.timestamp(), format.splat(), fileFormat)
+      })
+    ]
   });
 
   /**
@@ -98,7 +98,7 @@ export class Logger {
    * @param message log message
    * @param module name of the module where this log was originated from (optional)
    */
-  public static log(level: LogLevel, message: string, module?: string) {
+  public static log(level: LogLevel, message: string, module?: string): void {
     this.winstonLogger.log(level, message, { module: module });
   }
 }

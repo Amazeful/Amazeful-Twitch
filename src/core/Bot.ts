@@ -29,7 +29,7 @@ export class Bot {
    * Initializes the global bot object with all necessary modules
    */
   @DebugLogger
-  public async init() {
+  public async init(): Promise<void> {
     try {
       //ORM always first
       await this.orm.init();

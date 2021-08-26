@@ -15,6 +15,6 @@ export const AutoWired: PropertyDecorator = (target, propertyKey) => {
   Object.defineProperty(target, propertyKey, {
     get: () => {
       return container.resolve(type);
-    },
+    }
   });
 };

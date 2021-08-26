@@ -4,7 +4,7 @@ import {
   OneToOne,
   Property,
   Unique,
-  Collection,
+  Collection
 } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
 import { Channel } from "./Channel";
@@ -52,13 +52,13 @@ export class User extends BaseModel {
   viewCount!: number;
 
   @Property()
-  suspended: boolean = false;
+  suspended = false;
 
   @OneToOne({
     entity: () => Channel,
     inversedBy: "owner",
     orphanRemoval: true,
-    nullable: true,
+    nullable: true
   })
   primaryChannel?: Channel;
 
@@ -77,9 +77,5 @@ export class User extends BaseModel {
     this.profileImageURL = userDetails.profileImageURL;
     this.offlineImageURL = userDetails.offlineImageURL;
     this.viewCount = userDetails.viewCount;
-  }
-
-  public testFunc() {
-    return 1000;
   }
 }

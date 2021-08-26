@@ -4,7 +4,7 @@ import {
   Entity,
   Enum,
   Property,
-  Unique,
+  Unique
 } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
 import { Roles } from "../types/Roles";
@@ -22,13 +22,13 @@ export class Command extends BaseModel {
   channel!: number;
 
   @Property()
-  enabled: boolean = true;
+  enabled = true;
 
   @Property()
-  cooldown: number = 5;
+  cooldown = 5;
 
   @Property()
-  userCooldown: number = 15;
+  userCooldown = 15;
 
   @Enum(() => Roles)
   role: Roles = Roles.GLOBAL;
@@ -43,7 +43,7 @@ export class Command extends BaseModel {
   aliases: string[] = [];
 
   @Property()
-  hasVars: boolean = false;
+  hasVars = false;
 
   @Embedded({ entity: () => Timer })
   timer: Timer = new Timer();

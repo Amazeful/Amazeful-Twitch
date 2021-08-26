@@ -12,7 +12,7 @@ describe("./decorators/DebugLogger", () => {
     const mockLog = jest.fn();
     Logger.log = mockLog;
 
-    var testClass = new TestClass();
+    const testClass = new TestClass();
 
     testClass.test();
 

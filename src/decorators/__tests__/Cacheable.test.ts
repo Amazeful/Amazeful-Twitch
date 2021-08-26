@@ -21,10 +21,10 @@ class Test {
     return {
       name: {
         first: firstName,
-        last: lastName,
+        last: lastName
       },
 
-      age: age,
+      age: age
     };
   }
 
@@ -36,15 +36,15 @@ class Test {
 
 describe("./decorators/Cacheable", () => {
   test("should cache the result correctly before returning value", async () => {
-    var test = new Test();
+    const test = new Test();
     const mockedCache = jest.fn();
     CacheManager.prototype.cache = mockedCache;
     const expected: CacheSetConfig = {
       key: "Test/cacheableMethod/",
       value: JSON.stringify("test"),
-      expiry: 100,
+      expiry: 100
     };
-    var result = await test.cacheableMethod();
+    const result = await test.cacheableMethod();
 
     expect(mockedCache).toBeCalledTimes(1);
     expect(mockedCache.mock.calls[0][0]).toEqual(expected);
@@ -52,13 +52,13 @@ describe("./decorators/Cacheable", () => {
   });
 
   test("should return the value from cache", async () => {
-    var test = new Test();
+    const test = new Test();
     const mockedGet = jest.fn();
     mockedGet
       .mockReturnValueOnce(null)
       .mockReturnValueOnce(JSON.stringify("test"));
     CacheManager.prototype.get = mockedGet;
-    var result = await test.cacheableMethod();
+    let result = await test.cacheableMethod();
     result = await test.cacheableMethod();
     expect(mockedGet).toBeCalledTimes(2);
     expect(mockedGet.mock.calls[0][0]).toBe("Test/cacheableMethod/");
@@ -69,23 +69,23 @@ describe("./decorators/Cacheable", () => {
   });
 
   test("should return the object value from cache", async () => {
-    var test = new Test();
+    const test = new Test();
     const mockedGet = jest.fn();
 
     const expected = {
       name: {
         first: "John",
-        last: "Doe",
+        last: "Doe"
       },
 
-      age: 20,
+      age: 20
     };
 
     mockedGet
       .mockReturnValueOnce(null)
       .mockReturnValueOnce(JSON.stringify(expected));
     CacheManager.prototype.get = mockedGet;
-    var result = await test.cacheableObject("John", "Doe", 20);
+    let result = await test.cacheableObject("John", "Doe", 20);
     result = await test.cacheableObject("John", "Doe", 20);
     expect(mockedGet).toBeCalledTimes(2);
     expect(mockedGet.mock.calls[0][0]).toBe("Test/cacheableObject/John:Doe:20");
@@ -96,11 +96,11 @@ describe("./decorators/Cacheable", () => {
   });
 
   test("should still return value if cache fails", async () => {
-    var test = new Test();
+    const test = new Test();
     const mockedGet = jest.fn();
     CacheManager.prototype.get = mockedGet;
     mockedGet.mockRejectedValueOnce("Sadly cache failed :(");
-    var result = await test.cacheableWithError();
+    const result = await test.cacheableWithError();
     expect(result).toBe("test");
   });
 });

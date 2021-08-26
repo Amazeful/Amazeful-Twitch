@@ -7,5 +7,5 @@ export enum TriviaCategory {
   SPORTS = "sports",
   ENTERTAINMENT = "entertainment",
   SCIENCE = "science",
-  GENERAL = "general",
+  GENERAL = "general"
 }

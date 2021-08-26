@@ -11,21 +11,22 @@ import { Logger, LogLevel } from "../utils/Logger";
 export const Cacheable =
   (config: CacheableConfig): CacheableMethodDecorator =>
   (target, propertyKey, descriptor) => {
-    const originalMethod = descriptor.value!;
+    if (!descriptor.value) return;
+    const originalMethod = descriptor.value;
     descriptor.value = async function name(...args: any[]) {
-      let cacheManger = container.resolve(CacheManager);
+      const cacheManger = container.resolve(CacheManager);
       if (!config.key) {
         config.key = `${target.constructor.name}/${propertyKey}/${args
           .map((arg) => arg.toString())
           .join(":")}`;
       }
       try {
-        let cachedValue = await cacheManger.get(config.key);
+        const cachedValue = await cacheManger.get(config.key);
         if (cachedValue) {
-          let jsonValue = JSON.parse(cachedValue);
+          const jsonValue = JSON.parse(cachedValue);
           if (config.entity) {
-            let orm = container.resolve(ORM);
-            let repository = orm.em.getRepository(config.entity);
+            const orm = container.resolve(ORM);
+            const repository = orm.em.getRepository(config.entity);
             return repository.merge(jsonValue);
           }
           return jsonValue;
@@ -38,12 +39,12 @@ export const Cacheable =
         return originalMethod.apply(this, args);
       }
 
-      var result = await originalMethod.apply(this, args);
+      const result = await originalMethod.apply(this, args);
 
       cacheManger.cache({
         key: config.key,
         value: JSON.stringify(result),
-        expiry: config.expiry,
+        expiry: config.expiry
       });
 
       return result;

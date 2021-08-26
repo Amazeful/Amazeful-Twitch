@@ -7,7 +7,7 @@ import {
   sendPrivmsg,
   SingleConnection,
   SlowModeRateLimiter,
-  validateChannelName,
+  validateChannelName
 } from "dank-twitch-irc";
 import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
@@ -31,8 +31,8 @@ export class ChatClient extends DankClient {
       maxChannelCountPerConnection: 200,
       connectionRateLimits: {
         parallelConnections: 5,
-        releaseTime: 2000,
-      },
+        releaseTime: 2000
+      }
     });
 
     this.use(new AlternateMessageModifier(this));
@@ -43,7 +43,7 @@ export class ChatClient extends DankClient {
 
   @DebugLogger
   private createTransportSockets() {
-    for (var i = 0; i < this.massTransportPoolSize; i++) {
+    for (let i = 0; i < this.massTransportPoolSize; i++) {
       this.newMassTransportSocket();
     }
     this.on("close", () => {
@@ -89,7 +89,7 @@ export class ChatClient extends DankClient {
     return conn;
   }
 
-  public async reconnect() {
+  public async reconnect(): Promise<void> {
     this.createTransportSockets();
     await this.connect();
   }
@@ -97,7 +97,7 @@ export class ChatClient extends DankClient {
   public override async privmsg(
     channelName: string,
     message: string,
-    fast: boolean = false
+    fast = false
   ): Promise<void> {
     if (!fast) return super.privmsg(channelName, message);
     channelName = correctChannelName(channelName);
@@ -109,7 +109,7 @@ export class ChatClient extends DankClient {
     channelName: string,
     message: string,
     replyTo?: string,
-    fast: boolean = false
+    fast = false
   ): Promise<void> {
     if (!fast) return super.say(channelName, message, replyTo);
     channelName = correctChannelName(channelName);
@@ -118,7 +118,7 @@ export class ChatClient extends DankClient {
   }
 
   private requireMassTransportSocket(): SingleConnection {
-    var con = this.massTransportSockets.shift();
+    const con = this.massTransportSockets.shift();
     if (!con) return this.newMassTransportSocket();
     this.massTransportSockets.push(con);
     return con;

@@ -30,9 +30,9 @@ export class Purge extends Module {
   }
 
   protected async init(): Promise<void> {
-    var repository = this.orm.em.getRepository(PurgeConfig);
-    var config = await repository.findOne({
-      channel: this.channelData.channelID,
+    const repository = this.orm.em.getRepository(PurgeConfig);
+    let config = await repository.findOne({
+      channel: this.channelData.channelID
     });
 
     if (!config) {
@@ -51,12 +51,12 @@ export class Purge extends Module {
       id: msg.messageID,
       sender: msg.senderUsername,
       message: msg.messageText,
-      timeStamp: new Date().valueOf(),
+      timeStamp: new Date().valueOf()
     });
   }
 
   @Validate()
-  public purge(@Valid(PurgeSchema) options: PurgeOptions) {
+  public async purge(@Valid(PurgeSchema) options: PurgeOptions): Promise<void> {
     if (!this.config.enabled) {
       throw new ValidationError(
         "Module purge is currently disabled. You must enable the purge module before using this command."

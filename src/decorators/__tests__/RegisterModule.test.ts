@@ -13,9 +13,9 @@ class TestModule extends Module {
 }
 describe("./decorators/RegisterModule", () => {
   test("Should add module to Channel class metadata", () => {
-    var expected = [TestModule];
+    const expected = [TestModule];
 
-    var actual = Channel.moduleContainer;
+    const actual = Channel.moduleContainer;
 
     //Use strict equal. No need to check types as they will be converted to module type in Channel class
     expect(actual).toStrictEqual(expected);

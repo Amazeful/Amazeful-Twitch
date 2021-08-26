@@ -4,7 +4,7 @@ import {
   Unique,
   OneToOne,
   Collection,
-  ManyToMany,
+  ManyToMany
 } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
 import { User } from "./User";
@@ -28,10 +28,10 @@ export class Channel extends BaseModel {
   title?: string;
 
   @Property()
-  joined: boolean = true;
+  joined = true;
 
   @Property()
-  silenced: boolean = false;
+  silenced = false;
 
   @Property()
   accessToken?: string;
@@ -40,13 +40,13 @@ export class Channel extends BaseModel {
   refreshToken?: string;
 
   @Property()
-  prefix: string = "!";
+  prefix = "!";
 
   @Property()
-  live: boolean = false;
+  live = false;
 
   @Property()
-  shard: number = 1;
+  shard = 1;
 
   @Property()
   startedAt?: Date;
@@ -55,7 +55,7 @@ export class Channel extends BaseModel {
   endedAt?: Date;
 
   @Property()
-  moderator: boolean = false;
+  moderator = false;
 
   @OneToOne({ entity: () => User, mappedBy: "primaryChannel" })
   owner?: User;

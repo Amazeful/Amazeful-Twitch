@@ -1,7 +1,7 @@
 import {
   CommandHandlerType,
   VariableResolverType,
-  MessageHandlerType,
+  MessageHandlerType
 } from "./Misc";
 import { Module } from "./Module";
 //Defines a type for Cacheable method decorators.

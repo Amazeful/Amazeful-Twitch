@@ -20,7 +20,7 @@ export class Twitch {
       username: process.env.USERNAME,
       password: process.env.PASSWORD,
       clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
+      clientSecret: process.env.CLIENT_SECRET
     };
   }
 
@@ -29,9 +29,9 @@ export class Twitch {
    */
   @DebugLogger
   public async init(): Promise<void> {
-    let repository = this.orm.em.getRepository(TokenInfo);
+    const repository = this.orm.em.getRepository(TokenInfo);
     let tokenInfo = await repository.findOne({
-      shardID: process.env.SHARD_ID,
+      shardID: process.env.SHARD_ID
     });
 
     if (!tokenInfo) {
@@ -48,13 +48,13 @@ export class Twitch {
       {
         clientId: this.twitchData.clientID,
         clientSecret: this.twitchData.clientSecret,
-        onRefresh: (token: AccessToken) => this.onRefresh(token),
+        onRefresh: (token: AccessToken) => this.onRefresh(token)
       },
       {
         accessToken: this.tokenInfo.accessToken,
         refreshToken: this.tokenInfo.refreshToken,
         expiresIn: this.tokenInfo.expirey,
-        obtainmentTimestamp: this.tokenInfo.tokenObtainTime.valueOf(),
+        obtainmentTimestamp: this.tokenInfo.tokenObtainTime.valueOf()
       }
     );
 
@@ -74,19 +74,19 @@ export class Twitch {
     this.tokenInfo.tokenObtainTime = new Date();
     console.log(this.tokenInfo);
 
-    let repository = this.orm.em.getRepository(TokenInfo);
+    const repository = this.orm.em.getRepository(TokenInfo);
     await repository.persistAndFlush(this.tokenInfo);
   }
 
-  public get client() {
+  public get client(): ApiClient {
     return this.apiClient;
   }
 
-  public get provider() {
+  public get provider(): RefreshingAuthProvider {
     return this.authProvider;
   }
 
-  public get data() {
+  public get data(): TwitchData {
     return this.twitchData;
   }
 }

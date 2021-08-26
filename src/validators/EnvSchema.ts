@@ -13,7 +13,7 @@ export const EnvSchema = Joi.object({
   CLIENT_SECRET: Joi.string().required(),
   ACCESS_TOKEN: Joi.string().required(),
   REFRESH_TOKEN: Joi.string().required(),
-  SHARD_ID: Joi.number().integer().default(0),
+  SHARD_ID: Joi.number().integer().default(0)
 })
   .required()
   .label(".env file");

@@ -12,7 +12,7 @@ describe("./decorators/TryCathLog", () => {
     const mockLog = jest.fn();
     Logger.log = mockLog;
 
-    var testClass = new TestClass();
+    const testClass = new TestClass();
 
     //should NOT throw
     testClass.test();

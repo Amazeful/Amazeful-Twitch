@@ -2,7 +2,7 @@ import { singleton } from "tsyringe";
 import { AutoWired } from "../AutoWired";
 @singleton()
 class TestSingelton {
-  public actual: string = "test1234";
+  public actual = "test1234";
 }
 
 class TestClass {
@@ -10,9 +10,9 @@ class TestClass {
 }
 describe("./decorators/AutoWired", () => {
   test("Should inject singleton into class", () => {
-    var expected = "test1234";
+    const expected = "test1234";
 
-    var testClass = new TestClass();
+    const testClass = new TestClass();
 
     expect(testClass.testSingleton.actual).toStrictEqual(expected);
   });

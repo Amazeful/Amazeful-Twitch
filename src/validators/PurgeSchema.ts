@@ -22,7 +22,7 @@ export const PurgeSchema = Joi.object({
     .min(10)
     .max(600)
     .required()
-    .label("continuous time"),
+    .label("continuous time")
 })
   .required()
   .label("Purge Options");

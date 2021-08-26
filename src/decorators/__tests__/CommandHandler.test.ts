@@ -20,13 +20,13 @@ describe("./decorators/CommandHandler", () => {
         return this.testString;
       }
     }
-    var test = new Test(new Channel());
-    var commands: Array<DefaultCommandOptions> = Reflect.getMetadata(
+    const test = new Test(new Channel());
+    const commands: Array<DefaultCommandOptions> = Reflect.getMetadata(
       COMMAND_HANDLER,
       test
     );
-    let firstCom = commands[0];
-    var result = await firstCom.handler.bind(test)("amazeful", []);
+    const firstCom = commands[0];
+    const result = await firstCom.handler.bind(test)("amazeful", []);
     expect(result).toBe("This is a test");
     expect(firstCom.name).toBe("test test");
     expect(firstCom.aliases).toEqual([]);

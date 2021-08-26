@@ -8,5 +8,5 @@ export enum Roles {
   MODERATOR = 1 << 5,
   SUPERMOD = 1 << 6,
   BROADCASTER = 1 << 7,
-  ADMIN = 1 << 8,
+  ADMIN = 1 << 8
 }

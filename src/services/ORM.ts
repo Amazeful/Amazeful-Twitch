@@ -1,5 +1,5 @@
 import { MikroORM } from "@mikro-orm/core";
-import { MongoDriver } from "@mikro-orm/mongodb";
+import { MongoDriver, MongoEntityManager } from "@mikro-orm/mongodb";
 import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
 
@@ -8,7 +8,7 @@ export class ORM {
   private mikroORM!: MikroORM<MongoDriver>;
 
   @DebugLogger
-  public async init() {
+  public async init(): Promise<void> {
     this.mikroORM = await MikroORM.init({
       entities: ["./src/models/*.ts", "./src/models/embeddables/*.ts"],
       dbName: "Amazeful",
@@ -19,16 +19,16 @@ export class ORM {
 
       driverOptions: {
         poolSize: process.env.NODE_ENV === "production" ? 100 : 5,
-        ssl: process.env.NODE_ENV === "production",
-      },
+        ssl: process.env.NODE_ENV === "production"
+      }
     });
   }
 
-  public get em() {
+  public get em(): MongoEntityManager<MongoDriver> {
     return this.mikroORM.em;
   }
 
-  public async close() {
+  public async close(): Promise<void> {
     return await this.mikroORM.close();
   }
 }

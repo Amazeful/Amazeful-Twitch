@@ -4,13 +4,13 @@ import { StreamStatus } from "../../types/StreamStatus";
 @Embeddable()
 export class Timer {
   @Property()
-  enabled: boolean = false;
+  enabled = false;
 
   @Property()
-  minMessages: number = 10;
+  minMessages = 10;
 
   @Property()
-  interval: number = 3;
+  interval = 3;
 
   @Enum(() => StreamStatus)
   streamStatus: StreamStatus = StreamStatus.ANY;

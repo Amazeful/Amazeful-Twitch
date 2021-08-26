@@ -16,22 +16,22 @@ export class Channel {
     this.modules = {};
   }
 
-  public async init() {
+  public async init(): Promise<void> {
     await this.registerModules();
   }
 
   /**
    * Registers modules marked with @RegisterModule decorator
    */
-  public async registerModules() {
-    let modulesDir = resolve(__dirname, "..", "modules");
-    let files = await fs.readdir(modulesDir);
+  public async registerModules(): Promise<void> {
+    const modulesDir = resolve(__dirname, "..", "modules");
+    const files = await fs.readdir(modulesDir);
 
-    for (let file of files) {
+    for (const file of files) {
       await import(resolve(modulesDir, file));
     }
 
-    for (let module of Channel.moduleContainer) {
+    for (const module of Channel.moduleContainer) {
       this.modules[module.name] = new module();
     }
   }

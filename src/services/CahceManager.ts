@@ -4,9 +4,9 @@ import { CacheSetConfig } from "../types/CacheSetConfig";
 
 @singleton()
 export class CacheManager extends Redis {
-  private _totalCalled: number = 0;
-  private _totalHit: number = 0;
-  private _totalMiss: number = 0;
+  private _totalCalled = 0;
+  private _totalHit = 0;
+  private _totalMiss = 0;
 
   public cache(data: CacheSetConfig): Promise<"OK" | null> {
     return super.set(data.key, data.value, "PX", data.expiry);
@@ -14,7 +14,7 @@ export class CacheManager extends Redis {
 
   public override async get(key: KeyType): Promise<string | null> {
     this._totalCalled++;
-    var result = await super.get(key);
+    const result = await super.get(key);
     if (!result) this._totalMiss++;
     else this._totalHit++;
     return result;
