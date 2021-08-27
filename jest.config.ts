@@ -5,10 +5,10 @@ export default {
   clearMocks: true,
   coverageDirectory: "coverage",
   collectCoverageFrom: ["src/**/*.ts"],
-  setupFilesAfterEnv: ["jest.setup.ts"],
+  setupFilesAfterEnv: ["./jest.setup.ts"],
   globals: {
     "ts-jest": {
-      tsConfig: "tsconfig.jest.json",
-    },
-  },
+      tsConfig: "tsconfig.jest.json"
+    }
+  }
 };
