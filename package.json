@@ -4,10 +4,7 @@
   "description": "An open-source multi-purpose Twitch.tv bot",
   "license": "AGPL-3.0",
   "author": "Amazeful",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Amazeful/Amazeful-Twitch.git"
-  },
+  "repository": "https://github.com/Amazeful/Amazeful-Twitch.git",
   "bugs": {
     "url": "https://github.com/Amazeful/Amazeful-Twitch/issues"
   },
@@ -59,5 +56,6 @@
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0"
-  }
+  },
+  "main": "index.js"
 }
