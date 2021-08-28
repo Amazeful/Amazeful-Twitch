@@ -1,8 +1,4 @@
-import {
-  CommandHandlerType,
-  VariableResolverType,
-  MessageHandlerType
-} from "./Misc";
+import { CommandHandlerType, VariableResolverType } from "./Misc";
 import { Module } from "./Module";
 //Defines a type for Cacheable method decorators.
 //Cacheable methods must return a Promise
@@ -26,12 +22,4 @@ export type VariableResolverDecorator = (
   target: Module,
   propertyKey: string,
   descriptor: TypedPropertyDescriptor<VariableResolverType>
-) => void;
-
-// MessageHandlerDecorator defines a type for message handler decorators.
-// Message handler methods must return a void Promise
-export type MessageHandlerDecorator = (
-  target: Module,
-  propertyKey: string,
-  descriptor: TypedPropertyDescriptor<MessageHandlerType>
 ) => void;
