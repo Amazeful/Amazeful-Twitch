@@ -16,7 +16,7 @@ describe("./decorators/DebugLogger", () => {
 
     testClass.test();
 
-    expect(mockLog).toBeCalled();
+    expect(mockLog).toHaveBeenCalled();
     expect(mockLog.mock.calls[0][0]).toBe(LogLevel.DEBUG);
     expect(mockLog.mock.calls[0][1]).toBe("test called with: <No Args>");
     expect(mockLog.mock.calls[0][2]).toBe("TestClass");

@@ -1,24 +1,35 @@
 env:
   commonjs: true
   es6: true
+  node: true
 parser: "@typescript-eslint/parser"
 plugins:
   - "@typescript-eslint"
   - "prettier"
+  - "regexp"
 
 extends:
   - "plugin:@typescript-eslint/recommended"
   - "prettier"
   - "plugin:prettier/recommended"
+  - "plugin:regexp/recommended"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
 parserOptions:
   ecmaVersion: 2020
+rules:
+  "@typescript-eslint/no-explicit-any": off
+  "@typescript-eslint/ban-types": off
+
 overrides:
   - files:
       - "*.test.ts"
       - "*.spec.ts"
-rules:
-  "@typescript-eslint/no-explicit-any": off
-  "@typescript-eslint/ban-types": off
+    plugins:
+      - "jest"
+    extends:
+      - "plugin:jest/recommended"
+      - "plugin:jest/style"
+    rules:
+      "@typescript-eslint/no-unused-vars": off

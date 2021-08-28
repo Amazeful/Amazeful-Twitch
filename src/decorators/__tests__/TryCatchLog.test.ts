@@ -16,7 +16,7 @@ describe("./decorators/TryCathLog", () => {
 
     //should NOT throw
     testClass.test();
-    expect(mockLog).toBeCalledTimes(2);
+    expect(mockLog).toHaveBeenCalledTimes(2);
     //Should debug log the function call data
     expect(mockLog.mock.calls[0][0]).toBe(LogLevel.DEBUG);
     expect(mockLog.mock.calls[0][1]).toBe("test called with: <No Args>");

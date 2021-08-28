@@ -46,7 +46,7 @@ describe("./decorators/Cacheable", () => {
     };
     const result = await test.cacheableMethod();
 
-    expect(mockedCache).toBeCalledTimes(1);
+    expect(mockedCache).toHaveBeenCalledTimes(1);
     expect(mockedCache.mock.calls[0][0]).toEqual(expected);
     expect(result).toBe("test");
   });
@@ -60,10 +60,10 @@ describe("./decorators/Cacheable", () => {
     CacheManager.prototype.get = mockedGet;
     let result = await test.cacheableMethod();
     result = await test.cacheableMethod();
-    expect(mockedGet).toBeCalledTimes(2);
+    expect(mockedGet).toHaveBeenCalledTimes(2);
     expect(mockedGet.mock.calls[0][0]).toBe("Test/cacheableMethod/");
     expect(mockedGet.mock.calls[1][0]).toBe("Test/cacheableMethod/");
-    expect(mockedGet.mock.results[0].value).toBe(null);
+    expect(mockedGet.mock.results[0].value).toBeNull();
     expect(mockedGet.mock.results[1].value).toBe(JSON.stringify("test"));
     expect(result).toBe("test");
   });
@@ -87,10 +87,10 @@ describe("./decorators/Cacheable", () => {
     CacheManager.prototype.get = mockedGet;
     let result = await test.cacheableObject("John", "Doe", 20);
     result = await test.cacheableObject("John", "Doe", 20);
-    expect(mockedGet).toBeCalledTimes(2);
+    expect(mockedGet).toHaveBeenCalledTimes(2);
     expect(mockedGet.mock.calls[0][0]).toBe("Test/cacheableObject/John:Doe:20");
     expect(mockedGet.mock.calls[1][0]).toBe("Test/cacheableObject/John:Doe:20");
-    expect(mockedGet.mock.results[0].value).toBe(null);
+    expect(mockedGet.mock.results[0].value).toBeNull();
     expect(mockedGet.mock.results[1].value).toBe(JSON.stringify(expected));
     expect(result).toEqual(expected);
   });
