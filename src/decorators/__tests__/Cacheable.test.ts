@@ -2,7 +2,7 @@ import { mocked } from "ts-jest/utils";
 
 import { CacheManager } from "../../services/CahceManager";
 import { Cacheable } from "../Cacheable";
-import { CacheSetConfig } from "../../types/CacheSetConfig";
+import { CacheSetOptions } from "../../types/Options";
 
 jest.mock("../../services/CahceManager");
 
@@ -39,7 +39,7 @@ describe("./decorators/Cacheable", () => {
     const test = new Test();
     const mockedCache = jest.fn();
     CacheManager.prototype.cache = mockedCache;
-    const expected: CacheSetConfig = {
+    const expected: CacheSetOptions = {
       key: "Test/cacheableMethod/",
       value: JSON.stringify("test"),
       expiry: 100
@@ -99,7 +99,9 @@ describe("./decorators/Cacheable", () => {
     const test = new Test();
     const mockedGet = jest.fn();
     CacheManager.prototype.get = mockedGet;
-    mockedGet.mockRejectedValueOnce("Sadly cache failed :(");
+    mockedGet.mockRejectedValueOnce(
+      "Cache Fail Test: If you are seeing this error in your tests, don't worry. This is expected."
+    );
     const result = await test.cacheableWithError();
     expect(result).toBe("test");
   });

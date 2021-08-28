@@ -1,15 +1,15 @@
 import { CacheableMethodDecorator } from "../types/Decorators";
-import { CacheableConfig } from "../types/CacheableConfig";
 import { container } from "tsyringe";
 import { CacheManager } from "../services/CahceManager";
 import { ORM } from "../services/ORM";
 import { Logger, LogLevel } from "../utils/Logger";
+import { CacheableOptions } from "../types/Options";
 
 //Cacheable marks a method as cachebale.
 //Returns method value from the cache if available, otherwise caches the result.
 //It also accepts an entity type in config, hydrates entity using json value from cache, and returns an object of that entity type.
 export const Cacheable =
-  (config: CacheableConfig): CacheableMethodDecorator =>
+  (config: CacheableOptions): CacheableMethodDecorator =>
   (target, propertyKey, descriptor) => {
     if (!descriptor.value) return;
     const originalMethod = descriptor.value;

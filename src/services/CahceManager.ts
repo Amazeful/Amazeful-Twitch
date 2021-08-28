@@ -1,6 +1,6 @@
 import Redis, { KeyType } from "ioredis";
 import { singleton } from "tsyringe";
-import { CacheSetConfig } from "../types/CacheSetConfig";
+import { CacheSetOptions } from "../types/Options";
 
 @singleton()
 export class CacheManager extends Redis {
@@ -8,7 +8,7 @@ export class CacheManager extends Redis {
   private _totalHit = 0;
   private _totalMiss = 0;
 
-  public cache(data: CacheSetConfig): Promise<"OK" | null> {
+  public cache(data: CacheSetOptions): Promise<"OK" | null> {
     return super.set(data.key, data.value, "PX", data.expiry);
   }
 

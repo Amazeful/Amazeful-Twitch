@@ -1,7 +1,7 @@
 import { CommandHandlerDecorator } from "../types/Decorators";
 import { COMMAND_HANDLER } from "../utils/Constants";
-import { DefaultCommandOptions } from "../types/DefaultCommandOptions";
 import { Roles } from "../types/Roles";
+import { DefaultCommandOptions } from "../types/Options";
 
 //RegisterCommand registers a module command.
 //This is only used for default commands
