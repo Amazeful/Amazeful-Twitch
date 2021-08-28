@@ -9,9 +9,10 @@ export const PurgeSchema = Joi.object({
     .label("lookback time"),
   timeoutDuration: Joi.alternatives()
     .try(
-      Joi.number().integer().integer().min(1).max(1209600).required(),
-      Joi.string().lowercase().valid("ban")
+      Joi.number().integer().min(1).max(1209600).required(),
+      Joi.string().lowercase().required().valid("ban")
     )
+    .required()
     .label("timeout duration"),
   phrase: Joi.string().min(3).required(),
   regex: Joi.boolean().required(),
