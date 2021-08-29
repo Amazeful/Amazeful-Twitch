@@ -11,18 +11,12 @@ import { PurgeSchema } from "../validators/PurgeSchema";
 import LinkedList from "@aidenhadisi/doublylinkedlist";
 import { ValidationError } from "../types/errors/ValidationError";
 import { PurgeOptions } from "../types/options/PurgeOptions";
-
-export interface PurgeMessageData {
-  id: string;
-  sender: string;
-  message: string;
-  timeStamp: number; //unix timestamp
-}
+import { PurgeData } from "../types/data/PurgeData";
 
 @RegisterModule()
 export class Purge extends Module {
   //A linked list is the best structure for purge since it allows insertation and deletion at both ends in constant time (O(1))
-  private messages: LinkedList<PurgeMessageData>;
+  private messages: LinkedList<PurgeData>;
   private config!: PurgeConfig;
   constructor(channelData: Channel) {
     super(channelData);

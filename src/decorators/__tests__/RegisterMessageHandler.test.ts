@@ -1,11 +1,9 @@
 import { Module } from "../../types/Module";
-import {
-  RegisterMessageHandler,
-  RegisterMessageHandlerOptions
-} from "../RegisterMessageHandler";
+import { RegisterMessageHandler } from "../RegisterMessageHandler";
 import { PrivmsgMessage, parseTwitchMessage } from "dank-twitch-irc";
 import { Channel } from "../../models/Channel";
 import { MESSAGE_HANDLER } from "../../utils/Constants";
+import { RegisterMessageHandlerOptions } from "../../types/options/RegisterMessageHandlerOptions";
 
 describe("./decorators/RegisterMessageHandler", () => {
   test("should add correct meta data to module", async () => {

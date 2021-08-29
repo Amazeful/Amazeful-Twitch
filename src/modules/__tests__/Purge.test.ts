@@ -2,7 +2,8 @@ import { parseTwitchMessage, PrivmsgMessage } from "dank-twitch-irc";
 import { ValidationError } from "joi";
 import { Channel } from "../../models/Channel";
 import { PurgeConfig } from "../../models/PurgeConfig";
-import { Purge, PurgeMessageData } from "../Purge";
+import { Purge } from "../Purge";
+import { PurgeData } from "../../types/data/PurgeData";
 let purge: Purge;
 
 beforeEach(() => {
@@ -30,7 +31,7 @@ describe("./modules/Purge", () => {
         "@badge-info=;badges=;color=#AEE7E8;display-name=Amazeful;emotes=25:0-4,12-16/1902:6-10;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=138760387;subscriber=0;tmi-sent-ts=1507246572675;user-id=138760387 :amazeful!amazeful@amazeful.tmi.twitch.tv PRIVMSG #amazeful :Kappa Keepo Kappa"
       ) as PrivmsgMessage
     );
-    const expected: PurgeMessageData = {
+    const expected: PurgeData = {
       id: "b34ccfc7-4977-403a-8a94-33c6bac34fb8",
       sender: "amazeful",
       message: "Kappa Keepo Kappa",

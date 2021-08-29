@@ -9,18 +9,6 @@ import {
 import { BaseModel } from "./BaseModel";
 import { Channel } from "./Channel";
 
-export interface UserDetails {
-  userID: number;
-  login: string;
-  displayName: string;
-  type: string;
-  broadcasterType: string;
-  description: string;
-  profileImageURL: string;
-  offlineImageURL: string;
-  viewCount: number;
-}
-
 @Entity()
 export class User extends BaseModel {
   @Unique()
@@ -34,10 +22,10 @@ export class User extends BaseModel {
   displayName!: string;
 
   @Property()
-  type: string;
+  type!: string;
 
   @Property()
-  broadcasterType: string;
+  broadcasterType!: string;
 
   @Property()
   description?: string;
@@ -64,18 +52,4 @@ export class User extends BaseModel {
 
   @ManyToMany({ entity: () => Channel, mappedBy: "managers" })
   manages = new Collection<Channel>(this);
-
-  constructor(userDetails: UserDetails) {
-    super();
-
-    this.userID = userDetails.userID;
-    this.login = userDetails.login;
-    this.displayName = userDetails.displayName;
-    this.type = userDetails.type;
-    this.broadcasterType = userDetails.broadcasterType;
-    this.description = userDetails.description;
-    this.profileImageURL = userDetails.profileImageURL;
-    this.offlineImageURL = userDetails.offlineImageURL;
-    this.viewCount = userDetails.viewCount;
-  }
 }

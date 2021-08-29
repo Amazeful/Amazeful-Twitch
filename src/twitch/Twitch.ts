@@ -5,7 +5,7 @@ import { TokenInfo } from "../models/TokenInfo";
 import { AutoWired } from "../decorators/AutoWired";
 import { ORM } from "../services/ORM";
 import { DebugLogger } from "../decorators/DebugLogger";
-import { TwitchData } from "../types/Misc";
+import { TwitchData } from "../types/data/TwitchData";
 @singleton()
 export class Twitch {
   @AutoWired private orm!: ORM;
