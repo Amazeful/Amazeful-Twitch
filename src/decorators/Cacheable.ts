@@ -1,9 +1,9 @@
-import { CacheableMethodDecorator } from "../types/Decorators";
 import { container } from "tsyringe";
 import { CacheManager } from "../services/CahceManager";
 import { ORM } from "../services/ORM";
 import { Logger, LogLevel } from "../utils/Logger";
-import { CacheableOptions } from "../types/Options";
+import { CacheableMethodDecorator } from "../types/decorators/CacheableMethodDecorator";
+import { CacheableOptions } from "../types/options/CacheableOptions";
 
 //Cacheable marks a method as cachebale.
 //Returns method value from the cache if available, otherwise caches the result.

@@ -1,7 +1,7 @@
 import { Entity, Enum, Index, Property } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
-import { Roles } from "../types/Roles";
-import { AuditLogCategory } from "../types/AuditLogCategory";
+import { AuditLogCategory } from "../types/enums/AuditLogCategory";
+import { Roles } from "../types/enums/Roles";
 
 @Entity()
 @Index({ properties: ["createdAt"], options: { expireAfterSeconds: 864000 } })

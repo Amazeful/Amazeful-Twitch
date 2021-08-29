@@ -1,5 +1,5 @@
 import { Embeddable, Property, Enum } from "@mikro-orm/core";
-import { StreamStatus } from "../../types/StreamStatus";
+import { StreamStatus } from "../../types/enums/StreamStatus";
 
 @Embeddable()
 export class Timer {

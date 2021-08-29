@@ -7,10 +7,10 @@ import {
   Unique
 } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
-import { Roles } from "../types/Roles";
-import { StreamStatus } from "../types/StreamStatus";
 import { Timer } from "./embeddables/Timer";
 import { CommandAttributes } from "./embeddables/CommandAttributes";
+import { Roles } from "../types/enums/Roles";
+import { StreamStatus } from "../types/enums/StreamStatus";
 
 @Entity()
 @Unique({ properties: ["name", "channel"] })

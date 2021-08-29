@@ -6,11 +6,11 @@ import { RegisterMessageHandler } from "../decorators/RegisterMessageHandler";
 import { Valid, Validate } from "@aidenhadisi/joi-decorators";
 
 import { PurgeConfig } from "../models/PurgeConfig";
-import { ValidationError } from "../types/Errors";
 
 import { PurgeSchema } from "../validators/PurgeSchema";
 import LinkedList from "@aidenhadisi/doublylinkedlist";
-import { PurgeOptions } from "../types/Options";
+import { ValidationError } from "../types/errors/ValidationError";
+import { PurgeOptions } from "../types/options/PurgeOptions";
 
 export interface PurgeMessageData {
   id: string;

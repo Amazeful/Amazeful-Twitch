@@ -2,7 +2,7 @@ import { mocked } from "ts-jest/utils";
 
 import { CacheManager } from "../../services/CahceManager";
 import { Cacheable } from "../Cacheable";
-import { CacheSetOptions } from "../../types/Options";
+import { CacheSetOptions } from "../../types/options/CacheSetOptions";
 
 jest.mock("../../services/CahceManager");
 

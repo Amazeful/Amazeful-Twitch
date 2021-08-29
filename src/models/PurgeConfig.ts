@@ -1,6 +1,6 @@
 import { Entity, Property, Unique, Enum } from "@mikro-orm/core";
 import { BaseModel } from "./BaseModel";
-import { Roles } from "../types/Roles";
+import { Roles } from "../types/enums/Roles";
 
 @Entity()
 export class PurgeConfig extends BaseModel {

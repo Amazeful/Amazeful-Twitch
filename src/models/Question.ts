@@ -1,6 +1,6 @@
 import { Entity, Enum, Property } from "@mikro-orm/core";
-import { TriviaCategory } from "../types/TriviaCategory";
 import { BaseModel } from "./BaseModel";
+import { TriviaCategory } from "../types/enums/TriviaCategory";
 
 @Entity()
 export class Question extends BaseModel {

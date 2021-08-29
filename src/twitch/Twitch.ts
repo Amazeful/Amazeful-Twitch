@@ -1,11 +1,11 @@
 import { AccessToken, RefreshingAuthProvider } from "@twurple/auth";
 import { singleton } from "tsyringe";
-import { TwitchData } from "../types/TwitchData";
 import { ApiClient } from "@twurple/api";
 import { TokenInfo } from "../models/TokenInfo";
 import { AutoWired } from "../decorators/AutoWired";
 import { ORM } from "../services/ORM";
 import { DebugLogger } from "../decorators/DebugLogger";
+import { TwitchData } from "../types/Misc";
 @singleton()
 export class Twitch {
   @AutoWired private orm!: ORM;

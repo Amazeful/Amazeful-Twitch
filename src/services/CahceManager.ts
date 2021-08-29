@@ -1,6 +1,6 @@
 import Redis, { KeyType } from "ioredis";
 import { singleton } from "tsyringe";
-import { CacheSetOptions } from "../types/Options";
+import { CacheSetOptions } from "../types/options/CacheSetOptions";
 
 @singleton()
 export class CacheManager extends Redis {

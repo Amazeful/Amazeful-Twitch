@@ -1,6 +1,6 @@
 import { MESSAGE_HANDLER } from "../utils/Constants";
-import { MessageHandlerType } from "../types/Misc";
-import { MessageHandlerDecorator } from "../types/Decorators";
+import { MessageHandlerDecorator } from "../types/decorators/MessageHandlerDecorator";
+import { MessageHandler } from "../types/handlers/MessageHandler";
 
 //RegisterMessageHandler registers a module message handler.
 export const RegisterMessageHandler =
@@ -17,5 +17,5 @@ export const RegisterMessageHandler =
 
 export interface RegisterMessageHandlerOptions {
   modRequired: boolean;
-  handler: MessageHandlerType;
+  handler: MessageHandler;
 }

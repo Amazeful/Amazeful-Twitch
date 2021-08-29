@@ -1,9 +1,9 @@
 import { RegisterCommand } from "../RegisterCommand";
 import { Module } from "../../types/Module";
 import { COMMAND_HANDLER } from "../../utils/Constants";
-import { Roles } from "../../types/Roles";
 import { Channel } from "../../models/Channel";
-import { DefaultCommandOptions } from "../../types/Options";
+import { DefaultCommandOptions } from "../../types/options/DefaultCommandOptions";
+import { Roles } from "../../types/enums/Roles";
 
 describe("./decorators/CommandHandler", () => {
   test("should add correct meta data to module", async () => {
