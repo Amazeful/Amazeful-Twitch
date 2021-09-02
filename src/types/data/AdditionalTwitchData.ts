@@ -1,4 +1,4 @@
 import { Roles } from "../enums/Roles";
-export interface AdditionaTwitchData {
+export interface TwitchInfo {
   userRole: Roles;
 }

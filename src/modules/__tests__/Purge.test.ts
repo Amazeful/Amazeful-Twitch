@@ -32,7 +32,8 @@ describe("./modules/Purge", () => {
     purge.messageHandler(
       parseTwitchMessage(
         "@badge-info=;badges=;color=#AEE7E8;display-name=Amazeful;emotes=25:0-4,12-16/1902:6-10;id=b34ccfc7-4977-403a-8a94-33c6bac34fb8;mod=0;room-id=138760387;subscriber=0;tmi-sent-ts=1507246572675;user-id=138760387 :amazeful!amazeful@amazeful.tmi.twitch.tv PRIVMSG #amazeful :Kappa Keepo Kappa"
-      ) as PrivmsgMessage
+      ) as PrivmsgMessage,
+      { userRole: 100 }
     );
     const expected: PurgeData = {
       id: "b34ccfc7-4977-403a-8a94-33c6bac34fb8",
