@@ -1,4 +1,7 @@
-import { parseTwitchMessage, PrivmsgMessage } from "dank-twitch-irc";
+import {
+  parseTwitchMessage,
+  PrivmsgMessage
+} from "@aidenhadisi/dank-twitch-irc";
 import { ValidationError } from "joi";
 import { Channel } from "../../models/Channel";
 import { PurgeConfig } from "../../models/PurgeConfig";

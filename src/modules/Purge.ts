@@ -1,7 +1,7 @@
 import { RegisterModule } from "../decorators/RegisterModule";
 import { Channel } from "../models/Channel";
 import { Module } from "../types/Module";
-import { PrivmsgMessage } from "dank-twitch-irc";
+import { PrivmsgMessage } from "@aidenhadisi/dank-twitch-irc";
 import { RegisterMessageHandler } from "../decorators/RegisterMessageHandler";
 import { Valid, Validate } from "@aidenhadisi/joi-decorators";
 
@@ -23,7 +23,10 @@ export class Purge extends Module {
     this.messages = new LinkedList();
   }
 
-  protected async init(): Promise<void> {
+  /**
+   * Initializes the purge module
+   */
+  public async init(): Promise<void> {
     const repository = this.orm.em.getRepository(PurgeConfig);
     let config = await repository.findOne({
       channel: this.channelData.channelID
@@ -59,7 +62,7 @@ export class Purge extends Module {
     console.log(options);
   }
 
-  protected destroy(): Promise<void> {
+  public destroy(): void {
     throw new Error("Method not implemented.");
   }
 }
