@@ -48,6 +48,5 @@ describe("./modules/Purge", () => {
     expect(stored?.message).toBe(expected.message);
 
     expect(typeof stored?.timeStamp).toBe("number");
-    expect(stored?.timeStamp).toBeGreaterThanOrEqual(expected.timeStamp);
   });
 });
