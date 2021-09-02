@@ -42,6 +42,9 @@ export class User extends BaseModel {
   @Property()
   suspended = false;
 
+  @Property()
+  admin = false;
+
   @OneToOne({
     entity: () => Channel,
     inversedBy: "owner",
