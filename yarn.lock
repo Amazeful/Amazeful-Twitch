@@ -22,7 +22,7 @@
     split2 "^3.2.1"
     ts-toolbelt "^9.1.7"
 
-"@aidenhadisi/doublylinkedlist@^1.4.0":
+"@aidenhadisi/doublylinkedlist@^1.5.0":
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/@aidenhadisi/doublylinkedlist/-/doublylinkedlist-1.5.0.tgz#2c6487d9d39485cf57e76dd04b0344f4ec6ae9ee"
   integrity sha512-lMhBTw50x3vn48qAFOal2PFZe1hw7N5yGxMXSIr9P/P9St6aT6GpZgSZNPH3AJo3hoXXAcQZnKX8N16e7iaQZQ==
