@@ -4,18 +4,21 @@ import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
 import { ORM } from "../services/ORM";
 import { Twitch } from "../twitch/Twitch";
-import { singleton } from "tsyringe";
-
 /**
  * Class Bot defines global Twitch bot instance
  * Serves as an entry point for all channelbots
  * All components are accessable through this class
  */
-@singleton()
+
 export class Bot {
   @AutoWired private orm!: ORM;
   @AutoWired private client!: ChatClient;
   @AutoWired private twitch!: Twitch;
+
+  private shardID: number;
+  constructor() {
+    this.shardID = process.env.SHARD_ID;
+  }
 
   /**
    * Initializes the global bot object with all necessary modules
@@ -28,7 +31,11 @@ export class Bot {
       await this.twitch.init();
       await this.client.connect();
 
-      Logger.log(LogLevel.INFO, "All services are now running");
+      Logger.log(
+        LogLevel.INFO,
+        `All services are now running.`,
+        `SHARD: ${this.shardID}`
+      );
     } catch (e) {
       Logger.log(
         LogLevel.ERROR,
