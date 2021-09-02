@@ -4,10 +4,10 @@ import { RegisterModule } from "../RegisterModule";
 jest.mock("../../types/Module");
 @RegisterModule()
 class TestModule extends Module {
-  protected destroy(): Promise<void> {
+  public destroy(): void {
     throw new Error("Method not implemented.");
   }
-  protected init(): Promise<void> {
+  public init(): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }

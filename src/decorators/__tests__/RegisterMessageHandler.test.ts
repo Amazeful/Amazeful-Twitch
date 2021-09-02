@@ -1,6 +1,9 @@
 import { Module } from "../../types/Module";
 import { RegisterMessageHandler } from "../RegisterMessageHandler";
-import { PrivmsgMessage, parseTwitchMessage } from "dank-twitch-irc";
+import {
+  PrivmsgMessage,
+  parseTwitchMessage
+} from "@aidenhadisi/dank-twitch-irc";
 import { Channel } from "../../models/Channel";
 import { MESSAGE_HANDLER } from "../../utils/Constants";
 import { RegisterMessageHandlerOptions } from "../../types/options/RegisterMessageHandlerOptions";
@@ -8,11 +11,11 @@ import { RegisterMessageHandlerOptions } from "../../types/options/RegisterMessa
 describe("./decorators/RegisterMessageHandler", () => {
   test("should add correct meta data to module", async () => {
     class Test extends Module {
-      protected init(): Promise<void> {
+      public init(): Promise<void> {
         throw new Error("Method not implemented.");
       }
       public testString = "This is a test";
-      protected destroy(): Promise<void> {
+      public destroy(): void {
         throw new Error("Method not implemented.");
       }
       @RegisterMessageHandler()

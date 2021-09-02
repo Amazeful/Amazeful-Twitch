@@ -8,7 +8,7 @@ import {
   SingleConnection,
   SlowModeRateLimiter,
   validateChannelName
-} from "dank-twitch-irc";
+} from "@aidenhadisi/dank-twitch-irc";
 import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
 import { Logger, LogLevel } from "../utils/Logger";

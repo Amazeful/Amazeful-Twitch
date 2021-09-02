@@ -8,11 +8,11 @@ import { Roles } from "../../types/enums/Roles";
 describe("./decorators/CommandHandler", () => {
   test("should add correct meta data to module", async () => {
     class Test extends Module {
-      protected init(): Promise<void> {
+      public init(): Promise<void> {
         throw new Error("Method not implemented.");
       }
       private testString = "This is a test";
-      protected destroy(): Promise<void> {
+      public destroy(): void {
         throw new Error("Method not implemented.");
       }
       @RegisterCommand({})

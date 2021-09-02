@@ -14,6 +14,6 @@ export abstract class Module {
     this.channelData = channelData;
   }
 
-  protected abstract init(): Promise<void>;
-  protected abstract destroy(): Promise<void>;
+  public abstract init(): Promise<void>;
+  public abstract destroy(): void;
 }
