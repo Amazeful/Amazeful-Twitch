@@ -12,7 +12,7 @@ export class PurgeConfig extends BaseModel {
   enabled = false;
 
   @Enum(() => Roles)
-  minTarget: Roles = Roles.REGUALR;
+  maxTarget: Roles = Roles.REGUALR;
 
   @Property()
   defaultContinuous = false;
