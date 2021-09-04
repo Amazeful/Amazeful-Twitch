@@ -1,8 +1,6 @@
-export class ValidationError extends Error {
-  constructor(m: string) {
-    super(m);
-    Object.setPrototypeOf(this, ValidationError.prototype);
-    this.name = "ValidationError";
-    this.message = `Validation Error: ${m}`;
+import { BaseError } from "make-error";
+export class ValidationError extends BaseError {
+  constructor(message: string) {
+    super("Validation Error: " + message);
   }
 }
