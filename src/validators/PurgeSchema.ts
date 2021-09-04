@@ -10,7 +10,7 @@ export const PurgeSchema = Joi.object({
   timeoutDuration: Joi.alternatives()
     .try(
       Joi.number().integer().min(1).max(1209600).required(),
-      Joi.string().lowercase().required().valid("ban")
+      Joi.string().lowercase().required().valid("ban", "delete")
     )
     .required()
     .label("timeout duration"),
