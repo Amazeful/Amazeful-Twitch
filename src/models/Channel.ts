@@ -16,6 +16,12 @@ export class Channel extends BaseModel {
   channelID!: number;
 
   @Property()
+  login!: string;
+
+  @Property()
+  displayName!: string;
+
+  @Property()
   language?: string;
 
   @Property()
