@@ -1,7 +1,8 @@
-import { MikroORM } from "@mikro-orm/core";
+import { MikroORM, AnyEntity, FilterQuery, EntityName } from "@mikro-orm/core";
 import { MongoDriver, MongoEntityManager } from "@mikro-orm/mongodb";
 import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
+import { CommonUtils } from "../utils/CommonUtils";
 
 @singleton()
 export class ORM {
@@ -30,5 +31,26 @@ export class ORM {
 
   public async close(): Promise<void> {
     return await this.mikroORM.close();
+  }
+
+  /**
+   * Finds one from db, if it doesn't exist, it creates one
+   * @param entity
+   * @param query
+   * @param newEntity
+   */
+  public async findOneOrCreate<Entity extends AnyEntity>(
+    entity: EntityName<Entity>,
+    query: FilterQuery<Entity>,
+    newEntity: Entity
+  ): Promise<Entity> {
+    let data: Entity | null = await this.em.findOne(entity, query);
+
+    if (!CommonUtils.isDefined(data)) {
+      data = newEntity;
+      await this.em.persistAndFlush(data);
+    }
+
+    return data;
   }
 }
