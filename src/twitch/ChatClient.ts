@@ -7,7 +7,10 @@ import {
   sendPrivmsg,
   SingleConnection,
   SlowModeRateLimiter,
-  validateChannelName
+  validateChannelName,
+  deleteMsg,
+  ban,
+  timeout
 } from "@aidenhadisi/dank-twitch-irc";
 import { singleton } from "tsyringe";
 import { DebugLogger } from "../decorators/DebugLogger";
@@ -117,6 +120,35 @@ export class ChatClient extends DankClient {
     await say(this.requireMassTransportSocket(), channelName, message, replyTo);
   }
 
+  public override async deleteMsg(
+    channelName: string,
+    messageID: string
+  ): Promise<void> {
+    await deleteMsg(this.requireMassTransportSocket(), channelName, messageID);
+  }
+
+  public override async ban(
+    channelName: string,
+    username: string,
+    reason?: string
+  ): Promise<void> {
+    await ban(this.requireMassTransportSocket(), channelName, username, reason);
+  }
+
+  public override async timeout(
+    channelName: string,
+    username: string,
+    length: number,
+    reason?: string
+  ): Promise<void> {
+    await timeout(
+      this.requireMassTransportSocket(),
+      channelName,
+      username,
+      length,
+      reason
+    );
+  }
   private requireMassTransportSocket(): SingleConnection {
     const con = this.massTransportSockets.shift();
     if (!con) return this.newMassTransportSocket();

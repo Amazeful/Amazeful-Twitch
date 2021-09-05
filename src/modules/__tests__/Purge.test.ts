@@ -78,4 +78,161 @@ describe("./modules/Purge", () => {
 
     expect(purge["messages"].toArray()).toHaveLength(0);
   });
+
+  test("#regexPredicate(): Should match the correct string", () => {
+    const testCases = [
+      {
+        message: "this is a Kappa test",
+        options: {
+          lookbackTime: 10,
+          timeoutDuration: "ban",
+          pattern: "kappa",
+          modName: "amazeful",
+          regex: true,
+          continuous: false,
+          caseSensitive: false,
+          continuousTime: 10
+        },
+        expected: true
+      },
+      {
+        message: "this is a kappa test",
+        options: {
+          lookbackTime: 10,
+          timeoutDuration: "ban",
+          pattern: "kappa",
+          modName: "amazeful",
+          regex: true,
+          continuous: false,
+          caseSensitive: false,
+          continuousTime: 10
+        },
+        expected: true
+      },
+      {
+        message: "this is a kappa test",
+        options: {
+          lookbackTime: 10,
+          timeoutDuration: "ban",
+          pattern: "Kappa",
+          modName: "amazeful",
+          regex: true,
+          continuous: false,
+          caseSensitive: true,
+          continuousTime: 10
+        },
+        expected: false
+      }
+    ];
+
+    for (const testCase of testCases) {
+      expect(purge["regexPredicate"](testCase.message, testCase.options)).toBe(
+        testCase.expected
+      );
+    }
+  });
+
+  test("#defaultPredicate(): Should match the correct string", () => {
+    const testCases = [
+      {
+        message: "this is a Kappa test",
+        options: {
+          lookbackTime: 10,
+          timeoutDuration: "ban",
+          pattern: "kappa",
+          modName: "amazeful",
+          regex: false,
+          continuous: false,
+          caseSensitive: false,
+          continuousTime: 10
+        },
+        expected: true
+      },
+      {
+        message: "this is a kappa test",
+        options: {
+          lookbackTime: 10,
+          timeoutDuration: "ban",
+          pattern: "kappa",
+          modName: "amazeful",
+          regex: false,
+          continuous: false,
+          caseSensitive: false,
+          continuousTime: 10
+        },
+        expected: true
+      },
+      {
+        message: "this is a kappa test",
+        options: {
+          lookbackTime: 10,
+          timeoutDuration: "ban",
+          pattern: "Kappa",
+          modName: "amazeful",
+          regex: false,
+          continuous: false,
+          caseSensitive: true,
+          continuousTime: 10
+        },
+        expected: false
+      }
+    ];
+
+    for (const testCase of testCases) {
+      expect(
+        purge["defaultPredicate"](testCase.message, testCase.options)
+      ).toBe(testCase.expected);
+    }
+  });
+
+  test("#searchMessages(): Should find the correct messages", () => {
+    MockDate.set(0);
+
+    purge["messages"].push({
+      id: "1",
+      sender: "amzeful",
+      message: "Kappa",
+      timeStamp: new Date().valueOf()
+    });
+
+    MockDate.set(5);
+
+    purge["messages"].push({
+      id: "2",
+      sender: "hasanabi",
+      message: "Keepo",
+      timeStamp: new Date().valueOf()
+    });
+
+    purge["messages"].push({
+      id: "3",
+      sender: "xqcow",
+      message: "Kappa",
+      timeStamp: new Date().valueOf()
+    });
+
+    MockDate.set(10);
+
+    purge["messages"].push({
+      id: "4",
+      sender: "forsen",
+      message: "Kappa",
+      timeStamp: new Date().valueOf()
+    });
+
+    MockDate.set(20);
+
+    const results = purge["searchMessages"]({
+      lookbackTime: 15,
+      timeoutDuration: "ban",
+      pattern: "kappa",
+      modName: "amazeful",
+      regex: false,
+      continuous: false,
+      caseSensitive: false,
+      continuousTime: 10
+    });
+
+    expect(results).toHaveLength(2);
+  });
 });

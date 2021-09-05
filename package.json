@@ -20,7 +20,7 @@
     "format:fix": "prettier --write \"src\""
   },
   "dependencies": {
-    "@aidenhadisi/dank-twitch-irc": "^4.4.4",
+    "@aidenhadisi/dank-twitch-irc": "^4.4.6",
     "@aidenhadisi/doublylinkedlist": "^1.5.0",
     "@aidenhadisi/joi-decorators": "^1.3.0",
     "@mikro-orm/core": "^4.5.7",

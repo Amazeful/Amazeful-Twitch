@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aidenhadisi/dank-twitch-irc@^4.4.4":
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/@aidenhadisi/dank-twitch-irc/-/dank-twitch-irc-4.4.4.tgz#56c41feb724accc02e4ad44e2c350db4dd2ed90e"
-  integrity sha512-xWocF6SkRMnqVXdy0wMGqGSa6DDa6lrfCcnfNBiArsVKgz6z7WCbpKrbBXKmMKWPCtOcw95tPX5CF7oL0Rus/A==
+"@aidenhadisi/dank-twitch-irc@^4.4.6":
+  version "4.4.6"
+  resolved "https://registry.yarnpkg.com/@aidenhadisi/dank-twitch-irc/-/dank-twitch-irc-4.4.6.tgz#57831b411a23bfe15f4771e070bb4996142dde5f"
+  integrity sha512-ekW6QbyX8vxD3dDyxUMKNBQjHjDZKIqjiNmivu6yTJ3bNWruosRWNyKhs6bKVPoIBnbuhhaiCmYEqr953ymQxA==
   dependencies:
     "@types/debug" "^4.1.5"
     "@types/duplexify" "^3.6.0"

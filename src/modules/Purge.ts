@@ -20,6 +20,7 @@ export class Purge extends Module {
   //A linked list is the best structure for purge since it allows insertation and deletion at both ends in constant time (O(1))
   private messages: LinkedList<PurgeData>;
   private config!: PurgeConfig;
+
   constructor(channelData: Channel) {
     super(channelData);
     this.messages = new LinkedList();
@@ -73,60 +74,75 @@ export class Purge extends Module {
       );
     }
 
-    const lookbackTime = new Date().valueOf() - options.lookbackTime;
-
-    let matchedData: Array<PurgeData> = [];
-
-    //If phrase is a regex use regex
-    if (options.regex) {
-      const predicate: PurgeSearchPredicate = (data: PurgeData) => {
-        const flags = options.caseSensitive ? "i" : undefined;
-        const regex = new RE2(options.pattern, flags);
-        return regex.test(data.message);
-      };
-
-      matchedData = this.searchMessages(predicate, lookbackTime);
-    }
-    //otherwise use indexOf which performs faster
-    else {
-      const predicate: PurgeSearchPredicate = (data: PurgeData) => {
-        return data.message.indexOf(options.pattern) > -1;
-      };
-
-      matchedData = this.searchMessages(predicate, lookbackTime);
-    }
-
+    //Find messages
+    const matchedData = this.searchMessages(options);
     if (!matchedData.length) {
-      throw new NoMatchError(
-        `Provided pattern did not match any messages in given lookback time.`
-      );
+      throw new NoMatchError("Purge");
+    }
+
+    for (const match of matchedData) {
+      this.dispatchModAction(match, options);
     }
   }
 
   /**
-   * Searches message list and returns a list of results that match the given predicate
-   * @param predicate
+   * Regex Predicate matches messages using a regular expression
+   * @param message
+   * @param options
+   * @returns boolean
+   */
+  private regexPredicate: PurgeSearchPredicate = (
+    message: string,
+    options: PurgeOptions
+  ) => {
+    const flags = options.caseSensitive ? undefined : "i";
+    const regex = new RE2(options.pattern, flags);
+    return regex.test(message);
+  };
+
+  /**
+   * Default predicate matches messages using indexOf method which performs faster than regex
+   * @param message
+   * @param options
+   * @returns boolean
+   */
+  private defaultPredicate: PurgeSearchPredicate = (
+    message: string,
+    options: PurgeOptions
+  ) => {
+    if (options.caseSensitive) {
+      return message.indexOf(options.pattern) > -1;
+    }
+    return message.toLowerCase().indexOf(options.pattern) > -1;
+  };
+
+  /**
+   * Searches message list and returns a list of results that match the predicate
+   * @param options PurgeOptions
    * @param minTimestamp
    * @returns PurgeData[]
    */
-  private searchMessages(
-    predicate: PurgeSearchPredicate,
-    minTimestamp?: number
-  ): Array<PurgeData> {
+  private searchMessages(options: PurgeOptions): Array<PurgeData> {
     const results: PurgeData[] = [];
+
+    const lookbackTime = new Date().valueOf() - options.lookbackTime;
+
+    const predicate = options.regex
+      ? this.regexPredicate
+      : this.defaultPredicate;
 
     //search the list from the end, so if we reach the the loockback time limit we can stop right away
     let node = this.messages.tail;
     while (node && node.val) {
       //Stop if we are over time limit
       if (
-        CommonUtils.isDefined(minTimestamp) &&
-        node.val.timeStamp < minTimestamp
+        CommonUtils.isDefined(lookbackTime) &&
+        node.val.timeStamp < lookbackTime
       ) {
         break;
       }
 
-      if (predicate(node.val)) {
+      if (predicate(node.val.message, options)) {
         results.push(node.val);
       }
 
@@ -135,21 +151,33 @@ export class Purge extends Module {
     return results;
   }
 
-  // private performModAction(messages: Array<PurgeData>, options: PurgeOptions) {
-  //   if (options.timeoutDuration === "delete") {
-  //     for (const message of messages) {
-  //       this.chatClient.privmsg(
-  //         this.channelData.login,
-  //         `.delete ${message.id}`,
-  //         true
-  //       );
-  //     }
-  //   }
-  // }
+  /**
+   * Sends out a mod action based on provided options
+   * @param message
+   * @param options
+   */
+  private dispatchModAction(message: PurgeData, options: PurgeOptions): void {
+    if (options.timeoutDuration === "delete") {
+      this.chatClient.deleteMsg(this.channelData.login, message.id);
+    } else if (options.timeoutDuration === "ban") {
+      this.chatClient.ban(
+        this.channelData.login,
+        message.sender,
+        `Purged with phrase ${options.pattern}`
+      );
+    } else {
+      this.chatClient.timeout(
+        this.channelData.login,
+        message.sender,
+        +options.timeoutDuration,
+        `Purged with phrase ${options.pattern}`
+      );
+    }
+  }
 
   public destroy(): void {
     throw new Error("Method not implemented.");
   }
 }
 
-type PurgeSearchPredicate = (data: PurgeData) => boolean;
+type PurgeSearchPredicate = (message: string, options: PurgeOptions) => boolean;
