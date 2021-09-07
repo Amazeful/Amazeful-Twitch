@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@aidenhadisi/dank-twitch-irc@^4.4.6":
-  version "4.4.6"
-  resolved "https://registry.yarnpkg.com/@aidenhadisi/dank-twitch-irc/-/dank-twitch-irc-4.4.6.tgz#57831b411a23bfe15f4771e070bb4996142dde5f"
-  integrity sha512-ekW6QbyX8vxD3dDyxUMKNBQjHjDZKIqjiNmivu6yTJ3bNWruosRWNyKhs6bKVPoIBnbuhhaiCmYEqr953ymQxA==
+"@aidenhadisi/amazeful-twitch-irc@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@aidenhadisi/amazeful-twitch-irc/-/amazeful-twitch-irc-4.5.1.tgz#ce24abb069aa47dbac6f9c00c39b378b650e9c60"
+  integrity sha512-B5C20QlEBoGCW78PJZRxPt3vTYBHIPdBIbqew0z6x1Ud5H+bZqP/eyZtVIauiEhsQcELczMh7c2jVVSI0wbeIA==
   dependencies:
     "@types/debug" "^4.1.5"
     "@types/duplexify" "^3.6.0"
@@ -1260,12 +1260,12 @@ aproba@^1.0.3:
   integrity sha512-Y9J6ZjXtoYh8RnXVCMOU/ttDmk1aBjunq9vO0ta5x85WDQiQfUF9sIPBITdbiiIVcBo03Hi3jMxigBtsddlXRw==
 
 are-we-there-yet@~1.1.2:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/are-we-there-yet/-/are-we-there-yet-1.1.6.tgz#bc9101d19670c7bdb1546ed036568a6c9879ee79"
-  integrity sha512-+1byPnimWdGcKFRS48zG73nxM08kamPFReUYvEmRXI3E8E4YhF4voMRDaGlfGD1UeRHEgs4NhQCE28KI8JVj1A==
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/are-we-there-yet/-/are-we-there-yet-1.1.7.tgz#b15474a932adab4ff8a50d9adfa7e4e926f21146"
+  integrity sha512-nxwy40TuMiUGqMyRHgCSWZ9FM4VAoRP4xUYSTv5ImRog+h9yISPbVH7H8fASCIzYn9wlEv4zvFL7uKDMCFQm3g==
   dependencies:
     delegates "^1.0.0"
-    readable-stream "^3.6.0"
+    readable-stream "^2.0.6"
 
 arg@^4.1.0:
   version "4.1.3"
@@ -4157,7 +4157,7 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-readable-stream@2.3.7, readable-stream@^2.3.5, readable-stream@^2.3.7:
+readable-stream@2.3.7, readable-stream@^2.0.6, readable-stream@^2.3.5, readable-stream@^2.3.7:
   version "2.3.7"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.7.tgz#1eca1cf711aef814c04f62252a36a62f6cb23b57"
   integrity sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==

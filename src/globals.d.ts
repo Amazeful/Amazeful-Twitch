@@ -1,4 +1,4 @@
-import { RateLimitsConfig } from "dank-twitch-irc";
+import { RateLimitsConfig } from "@aidenhadisi/amazeful-twitch-irc";
 
 declare global {
   namespace NodeJS {

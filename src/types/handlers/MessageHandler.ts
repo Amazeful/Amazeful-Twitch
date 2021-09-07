@@ -1,4 +1,4 @@
-import { PrivmsgMessage } from "@aidenhadisi/dank-twitch-irc";
+import { PrivmsgMessage } from "@aidenhadisi/amazeful-twitch-irc";
 import { TwitchInfo } from "../data/AdditionalTwitchData";
 
 //MessageHandler is a function that handles incoming twitch messages

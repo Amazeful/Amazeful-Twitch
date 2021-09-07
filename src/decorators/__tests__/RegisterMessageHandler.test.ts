@@ -3,7 +3,7 @@ import { RegisterMessageHandler } from "../RegisterMessageHandler";
 import {
   PrivmsgMessage,
   parseTwitchMessage
-} from "@aidenhadisi/dank-twitch-irc";
+} from "@aidenhadisi/amazeful-twitch-irc";
 import { Channel } from "../../models/Channel";
 import { MESSAGE_HANDLER } from "../../utils/Constants";
 import { RegisterMessageHandlerOptions } from "../../types/options/RegisterMessageHandlerOptions";

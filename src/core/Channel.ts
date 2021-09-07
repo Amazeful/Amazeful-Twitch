@@ -5,7 +5,7 @@ import { Constructor } from "../types/Misc";
 import { Logger, LogLevel } from "../utils/Logger";
 import { RegisterMessageHandlerOptions } from "../types/options/RegisterMessageHandlerOptions";
 import { MESSAGE_HANDLER } from "../utils/Constants";
-import { PrivmsgMessage } from "@aidenhadisi/dank-twitch-irc";
+import { PrivmsgMessage } from "@aidenhadisi/amazeful-twitch-irc";
 import { Roles } from "../types/enums/Roles";
 
 /**

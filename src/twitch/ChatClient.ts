@@ -1,30 +1,13 @@
 import {
   AlternateMessageModifier,
-  ChatClient as DankClient,
-  correctChannelName,
-  removeInPlace,
-  say,
-  sendPrivmsg,
-  SingleConnection,
+  ChatClient as TwitchIRC,
   SlowModeRateLimiter,
-  validateChannelName,
-  deleteMsg,
-  ban,
-  timeout
-} from "@aidenhadisi/dank-twitch-irc";
+  ConnectionPool
+} from "@aidenhadisi/amazeful-twitch-irc";
 import { singleton } from "tsyringe";
-import { DebugLogger } from "../decorators/DebugLogger";
-import { Logger, LogLevel } from "../utils/Logger";
 
 @singleton()
-export class ChatClient extends DankClient {
-  private massTransportSockets: SingleConnection[];
-  private massTransportPoolSize: number =
-    process.env.NODE_ENV === "development" ? 5 : 100;
-
-  private maxRetries = 30;
-  private retryTimeout?: NodeJS.Timeout;
-  private currentRetires = 0;
+export class ChatClient extends TwitchIRC {
   constructor() {
     super({
       username: process.env.USERNAME,
@@ -40,140 +23,14 @@ export class ChatClient extends DankClient {
 
     this.use(new AlternateMessageModifier(this));
     this.use(new SlowModeRateLimiter(this));
-    this.massTransportSockets = [];
-    this.createTransportSockets();
-  }
-
-  @DebugLogger
-  private createTransportSockets() {
-    for (let i = 0; i < this.massTransportPoolSize; i++) {
-      this.newMassTransportSocket();
-    }
-    this.on("close", () => {
-      this.massTransportSockets.forEach((conn) => conn.close());
-    });
-  }
-
-  @DebugLogger
-  private newMassTransportSocket(): SingleConnection {
-    if (this.massTransportSockets.length > this.massTransportPoolSize)
-      return this.requireMassTransportSocket();
-    const conn = new SingleConnection(this.configuration);
-
-    for (const mixin of this.connectionMixins) {
-      conn.use(mixin);
-    }
-
-    conn.on("connecting", () => this.emitConnecting());
-    conn.on("connect", () => {
-      this.emitConnected();
-      Logger.log(LogLevel.WARN, "A new socket was connected");
-    });
-    conn.on("ready", () => this.emitReady());
-    conn.on("error", (error) => this.emitError(error));
-    conn.on("close", (hadError) => {
-      Logger.log(LogLevel.ERROR, `Disconnected ${hadError}`);
-      removeInPlace(this.massTransportSockets, conn);
-
-      if (
-        !this.closed &&
-        this.massTransportSockets.length < this.massTransportPoolSize
-      ) {
-        this.activateRetryInterval();
-        this.newMassTransportSocket();
-      }
-    });
-
-    // forward commands issued by this client
-    conn.on("rawCommmand", (cmd) => this.emit("rawCommmand", cmd));
-    conn.connect();
-
-    this.massTransportSockets.push(conn);
-    return conn;
+    this.use(
+      new ConnectionPool(this, {
+        poolSize: process.env.NODE_ENV === "development" ? 5 : 100
+      })
+    );
   }
 
   public async reconnect(): Promise<void> {
-    this.createTransportSockets();
     await this.connect();
-  }
-
-  public override async privmsg(
-    channelName: string,
-    message: string,
-    fast = false
-  ): Promise<void> {
-    if (!fast) return super.privmsg(channelName, message);
-    channelName = correctChannelName(channelName);
-    validateChannelName(channelName);
-    return sendPrivmsg(this.requireMassTransportSocket(), channelName, message);
-  }
-
-  public override async say(
-    channelName: string,
-    message: string,
-    replyTo?: string,
-    fast = false
-  ): Promise<void> {
-    if (!fast) return super.say(channelName, message, replyTo);
-    channelName = correctChannelName(channelName);
-    validateChannelName(channelName);
-    await say(this.requireMassTransportSocket(), channelName, message, replyTo);
-  }
-
-  public override async deleteMsg(
-    channelName: string,
-    messageID: string
-  ): Promise<void> {
-    await deleteMsg(this.requireMassTransportSocket(), channelName, messageID);
-  }
-
-  public override async ban(
-    channelName: string,
-    username: string,
-    reason?: string
-  ): Promise<void> {
-    await ban(this.requireMassTransportSocket(), channelName, username, reason);
-  }
-
-  public override async timeout(
-    channelName: string,
-    username: string,
-    length: number,
-    reason?: string
-  ): Promise<void> {
-    await timeout(
-      this.requireMassTransportSocket(),
-      channelName,
-      username,
-      length,
-      reason
-    );
-  }
-  private requireMassTransportSocket(): SingleConnection {
-    const con = this.massTransportSockets.shift();
-    if (!con) return this.newMassTransportSocket();
-    this.massTransportSockets.push(con);
-    return con;
-  }
-
-  private activateRetryInterval() {
-    if (this.retryTimeout) {
-      this.currentRetires++;
-      if (this.currentRetires === this.maxRetries) {
-        Logger.log(
-          LogLevel.ERROR,
-          `Max retries reached. Disconnecting client.`
-        );
-        this.close();
-      }
-      return;
-    }
-
-    this.retryTimeout = setTimeout(this.clearInterval, 30000);
-  }
-
-  private clearInterval() {
-    if (this.retryTimeout) clearTimeout(this.retryTimeout);
-    this.retryTimeout = undefined;
   }
 }
