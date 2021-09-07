@@ -1,5 +1,5 @@
 import LinkedList from "@aidenhadisi/doublylinkedlist";
-import { PrivmsgMessage } from "@aidenhadisi/dank-twitch-irc";
+import { PrivmsgMessage } from "@aidenhadisi/amazeful-twitch-irc";
 import { Valid, Validate } from "@aidenhadisi/joi-decorators";
 import RE2 from "re2";
 
@@ -158,19 +158,20 @@ export class Purge extends Module {
    */
   private dispatchModAction(message: PurgeData, options: PurgeOptions): void {
     if (options.timeoutDuration === "delete") {
+      console.log("called");
       this.chatClient.deleteMsg(this.channelData.login, message.id);
     } else if (options.timeoutDuration === "ban") {
       this.chatClient.ban(
         this.channelData.login,
         message.sender,
-        `Purged with phrase ${options.pattern}`
+        `Purged with phrase: ${options.pattern}`
       );
     } else {
       this.chatClient.timeout(
         this.channelData.login,
         message.sender,
         +options.timeoutDuration,
-        `Purged with phrase ${options.pattern}`
+        `Purged with phrase: ${options.pattern}`
       );
     }
   }
