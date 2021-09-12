@@ -15,11 +15,14 @@ import { Module } from "../types/Module";
 import { TwitchInfo } from "../types/data/AdditionalTwitchData";
 import { NoMatchError } from "../types/errors/NoMatchError";
 import { CommonUtils } from "../utils/CommonUtils";
+import { PurgeResults } from "../models/PurgeResults";
 @RegisterModule()
 export class Purge extends Module {
   //A linked list is the best structure for purge since it allows insertation and deletion at both ends in constant time (O(1))
   private messages: LinkedList<PurgeData>;
   private config!: PurgeConfig;
+  private continuousPurgeData?: PurgeOptions;
+  private continuousPurgeTimeout?: NodeJS.Timeout;
 
   constructor(channelData: Channel) {
     super(channelData);
@@ -80,8 +83,24 @@ export class Purge extends Module {
       throw new NoMatchError("Purge");
     }
 
-    for (const match of matchedData) {
-      this.dispatchModAction(match, options);
+    this.prepareAndDispatch(matchedData, options);
+
+    const purgeResults = new PurgeResults(options, matchedData);
+
+    const repository = this.orm.em.getRepository(PurgeResults);
+    await repository.persistAndFlush(purgeResults);
+  }
+
+  /**
+   * Removes the last purge data and ends continuous purge
+   */
+  public clearContinuousPurge(): void {
+    if (this.continuousPurgeData) {
+      this.continuousPurgeData = undefined;
+    }
+    if (this.continuousPurgeTimeout) {
+      clearTimeout(this.continuousPurgeTimeout);
+      this.continuousPurgeTimeout = undefined;
     }
   }
 
@@ -95,9 +114,13 @@ export class Purge extends Module {
     message: string,
     options: PurgeOptions
   ) => {
-    const flags = options.caseSensitive ? undefined : "i";
-    const regex = new RE2(options.pattern, flags);
-    return regex.test(message);
+    try {
+      const flags = options.caseSensitive ? undefined : "i";
+      const regex = new RE2(options.pattern, flags);
+      return regex.test(message);
+    } catch (e) {
+      throw new ValidationError("Invalid regex provided.");
+    }
   };
 
   /**
@@ -158,7 +181,6 @@ export class Purge extends Module {
    */
   private dispatchModAction(message: PurgeData, options: PurgeOptions): void {
     if (options.timeoutDuration === "delete") {
-      console.log("called");
       this.chatClient.deleteMsg(this.channelData.login, message.id);
     } else if (options.timeoutDuration === "ban") {
       this.chatClient.ban(
@@ -173,6 +195,31 @@ export class Purge extends Module {
         +options.timeoutDuration,
         `Purged with phrase: ${options.pattern}`
       );
+    }
+  }
+
+  /**
+   * Prepares purge data and sends out mod actions
+   * @param purgeData
+   * @param options
+   * @returns void
+   */
+  private prepareAndDispatch(
+    purgeData: Array<PurgeData>,
+    options: PurgeOptions
+  ): void {
+    if (options.timeoutDuration !== "delete") {
+      const set = new Set<string>();
+      for (const data of purgeData) {
+        if (!set.has(data.sender)) {
+          this.dispatchModAction(data, options);
+          set.add(data.sender);
+        }
+      }
+    } else {
+      for (const data of purgeData) {
+        this.dispatchModAction(data, options);
+      }
     }
   }
 

@@ -3,12 +3,15 @@ import {
   PrivmsgMessage
 } from "@aidenhadisi/amazeful-twitch-irc";
 import { ValidationError } from "joi";
+import { ValidationError as CustomValidationError } from "../../types/errors/ValidationError";
+
 import { Channel } from "../../models/Channel";
 import { PurgeConfig } from "../../models/PurgeConfig";
 import { Purge } from "../Purge";
 import { PurgeData } from "../../types/data/PurgeData";
 import MockDate from "mockdate";
 import { ChatClient } from "../../twitch/ChatClient";
+import { NoMatchError } from "../../types/errors/NoMatchError";
 
 let purge: Purge;
 
@@ -32,6 +35,37 @@ describe("./modules/Purge", () => {
           continuousTime: 10
         })
       ).toThrow(ValidationError);
+    });
+
+    test("should throw if not enabled", async () => {
+      purge["config"].enabled = false;
+      await expect(
+        purge.purge({
+          lookbackTime: 10,
+          timeoutDuration: "delete",
+          pattern: "nam",
+          modName: "amazeful",
+          regex: false,
+          continuous: false,
+          caseSensitive: false,
+          continuousTime: 10
+        })
+      ).rejects.toThrow(CustomValidationError);
+    });
+
+    test("should throw if no match", async () => {
+      await expect(
+        purge.purge({
+          lookbackTime: 10,
+          timeoutDuration: "delete",
+          pattern: "nam",
+          modName: "amazeful",
+          regex: false,
+          continuous: false,
+          caseSensitive: false,
+          continuousTime: 10
+        })
+      ).rejects.toThrow(NoMatchError);
     });
   });
 

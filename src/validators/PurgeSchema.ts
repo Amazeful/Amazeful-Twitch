@@ -14,10 +14,11 @@ export const PurgeSchema = Joi.object({
     )
     .required()
     .label("timeout duration"),
-  phrase: Joi.string().min(3).required(),
+  pattern: Joi.string().min(3).required(),
   regex: Joi.boolean().required(),
   modName: Joi.string().required(),
   continuous: Joi.boolean().required(),
+  caseSensitive: Joi.boolean().default(false),
   continuousTime: Joi.number()
     .integer()
     .min(10)
