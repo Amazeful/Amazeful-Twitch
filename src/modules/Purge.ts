@@ -13,7 +13,6 @@ import { RegisterModule } from "../decorators/RegisterModule";
 import { Channel } from "../models/Channel";
 import { Module } from "../types/Module";
 import { TwitchInfo } from "../types/data/AdditionalTwitchData";
-import { NoMatchError } from "../types/errors/NoMatchError";
 import { CommonUtils } from "../utils/CommonUtils";
 import { PurgeResults } from "../models/PurgeResults";
 @RegisterModule()
@@ -55,13 +54,17 @@ export class Purge extends Module {
     if (info.userRole > this.config.maxTarget) {
       return;
     }
-    //Add new messages to the end of list
-    this.messages.push({
+
+    const data: PurgeData = {
       id: msg.messageID,
       sender: msg.senderUsername,
       message: msg.messageText,
       timeStamp: new Date().valueOf()
-    });
+    };
+    //Add new messages to the end of list
+    this.messages.push(data);
+
+    this.checkMessage(data);
   }
 
   /**
@@ -79,12 +82,10 @@ export class Purge extends Module {
 
     //Find messages
     const matchedData = this.searchMessages(options);
-    if (!matchedData.length) {
-      throw new NoMatchError("Purge");
-    }
 
     this.prepareAndDispatch(matchedData, options);
 
+    this.setContinuousPurge(options);
     const purgeResults = new PurgeResults(options, matchedData);
 
     const repository = this.orm.em.getRepository(PurgeResults);
@@ -101,6 +102,37 @@ export class Purge extends Module {
     if (this.continuousPurgeTimeout) {
       clearTimeout(this.continuousPurgeTimeout);
       this.continuousPurgeTimeout = undefined;
+    }
+  }
+
+  /**
+   * Starts the Continuous Purge
+   * @param options purge options
+   */
+  private setContinuousPurge(options: PurgeOptions): void {
+    if (this.config.defaultContinuous || options.continuousTime) {
+      this.clearContinuousPurge();
+      this.continuousPurgeData = options;
+      this.continuousPurgeTimeout = setTimeout(
+        () => this.clearContinuousPurge(),
+        (options.continuousTime ?? this.config.defaultContinuousTime) * 1000
+      );
+    }
+  }
+
+  /**
+   * Checks incoming message against last purge if continuous purge is enabled
+   * @param data purge data
+   */
+  private checkMessage(data: PurgeData) {
+    if (this.continuousPurgeData) {
+      const predicate = this.continuousPurgeData.regex
+        ? this.regexPredicate
+        : this.defaultPredicate;
+
+      if (predicate(data.message, this.continuousPurgeData)) {
+        this.dispatchModAction(data, this.continuousPurgeData);
+      }
     }
   }
 

@@ -6,6 +6,5 @@ export interface PurgeOptions {
   regex: boolean; //Phrase is a regex?
   caseSensitive: boolean; //Prhase is case sensitive?
   modName: string; //name of the mod calling the command
-  continuous: boolean; //continue timing out this phrase
-  continuousTime: number; //time to continue
+  continuousTime?: number; //time to continue
 }

@@ -31,10 +31,7 @@ export class PurgeResults extends BaseModel {
   modName!: string;
 
   @Property()
-  continuous!: boolean;
-
-  @Property()
-  continuousTime!: number;
+  continuousTime?: number;
 
   @Property()
   matches!: PurgeData[];
@@ -47,7 +44,6 @@ export class PurgeResults extends BaseModel {
     this.regex = options.regex;
     this.caseSensitive = options.caseSensitive;
     this.modName = options.modName;
-    this.continuous = options.continuous;
     this.continuousTime = options.continuousTime;
     this.matches = matches;
   }

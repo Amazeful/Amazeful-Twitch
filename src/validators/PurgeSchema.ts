@@ -17,7 +17,6 @@ export const PurgeSchema = Joi.object({
   pattern: Joi.string().min(3).required(),
   regex: Joi.boolean().required(),
   modName: Joi.string().required(),
-  continuous: Joi.boolean().required(),
   caseSensitive: Joi.boolean().default(false),
   continuousTime: Joi.number()
     .integer()

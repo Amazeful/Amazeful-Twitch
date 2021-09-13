@@ -11,7 +11,7 @@ import { Purge } from "../Purge";
 import { PurgeData } from "../../types/data/PurgeData";
 import MockDate from "mockdate";
 import { ChatClient } from "../../twitch/ChatClient";
-import { NoMatchError } from "../../types/errors/NoMatchError";
+import { PurgeOptions } from "../../types/options/PurgeOptions";
 
 let purge: Purge;
 
@@ -30,7 +30,6 @@ describe("./modules/Purge", () => {
           pattern: "nam",
           modName: "amazeful",
           regex: false,
-          continuous: false,
           caseSensitive: false,
           continuousTime: 10
         })
@@ -46,26 +45,10 @@ describe("./modules/Purge", () => {
           pattern: "nam",
           modName: "amazeful",
           regex: false,
-          continuous: false,
           caseSensitive: false,
           continuousTime: 10
         })
       ).rejects.toThrow(CustomValidationError);
-    });
-
-    test("should throw if no match", async () => {
-      await expect(
-        purge.purge({
-          lookbackTime: 10,
-          timeoutDuration: "delete",
-          pattern: "nam",
-          modName: "amazeful",
-          regex: false,
-          continuous: false,
-          caseSensitive: false,
-          continuousTime: 10
-        })
-      ).rejects.toThrow(NoMatchError);
     });
   });
 
@@ -129,7 +112,6 @@ describe("./modules/Purge", () => {
             pattern: "kappa",
             modName: "amazeful",
             regex: true,
-            continuous: false,
             caseSensitive: false,
             continuousTime: 10
           },
@@ -143,7 +125,6 @@ describe("./modules/Purge", () => {
             pattern: "kappa",
             modName: "amazeful",
             regex: true,
-            continuous: false,
             caseSensitive: false,
             continuousTime: 10
           },
@@ -157,7 +138,6 @@ describe("./modules/Purge", () => {
             pattern: "Kappa",
             modName: "amazeful",
             regex: true,
-            continuous: false,
             caseSensitive: true,
             continuousTime: 10
           },
@@ -184,7 +164,6 @@ describe("./modules/Purge", () => {
             pattern: "kappa",
             modName: "amazeful",
             regex: false,
-            continuous: false,
             caseSensitive: false,
             continuousTime: 10
           },
@@ -198,7 +177,6 @@ describe("./modules/Purge", () => {
             pattern: "kappa",
             modName: "amazeful",
             regex: false,
-            continuous: false,
             caseSensitive: false,
             continuousTime: 10
           },
@@ -212,7 +190,6 @@ describe("./modules/Purge", () => {
             pattern: "Kappa",
             modName: "amazeful",
             regex: false,
-            continuous: false,
             caseSensitive: true,
             continuousTime: 10
           },
@@ -272,7 +249,6 @@ describe("./modules/Purge", () => {
         pattern: "kappa",
         modName: "amazeful",
         regex: false,
-        continuous: false,
         caseSensitive: false,
         continuousTime: 10
       });
@@ -298,7 +274,6 @@ describe("./modules/Purge", () => {
           pattern: "kappa",
           modName: "amazeful",
           regex: false,
-          continuous: false,
           caseSensitive: false,
           continuousTime: 10
         }
@@ -324,7 +299,6 @@ describe("./modules/Purge", () => {
           pattern: "kappa",
           modName: "amazeful",
           regex: false,
-          continuous: false,
           caseSensitive: false,
           continuousTime: 10
         }
@@ -352,7 +326,6 @@ describe("./modules/Purge", () => {
           pattern: "kappa",
           modName: "amazeful",
           regex: false,
-          continuous: false,
           caseSensitive: false,
           continuousTime: 10
         }
@@ -361,6 +334,39 @@ describe("./modules/Purge", () => {
       expect(ban).toHaveBeenCalled();
       expect(ban.mock.calls[0][1]).toBe("amazeful");
       expect(ban.mock.calls[0][2]).toBe("Purged with phrase: kappa");
+    });
+  });
+
+  describe("#setContinuousPurge()", () => {
+    jest.useFakeTimers();
+    test("should set the continous purge data", () => {
+      const data: PurgeOptions = {
+        lookbackTime: 10,
+        timeoutDuration: "delete",
+        pattern: "kappa",
+        modName: "amazeful",
+        regex: false,
+        caseSensitive: false,
+        continuousTime: 10
+      };
+      purge["setContinuousPurge"](data);
+
+      expect(purge["continuousPurgeData"]).toEqual(data);
+    });
+
+    test("should clear the continous purge data after timeout", async () => {
+      const data: PurgeOptions = {
+        lookbackTime: 10,
+        timeoutDuration: "delete",
+        pattern: "kappa",
+        modName: "amazeful",
+        regex: false,
+        caseSensitive: false,
+        continuousTime: 1
+      };
+      purge["setContinuousPurge"](data);
+      jest.runOnlyPendingTimers();
+      expect(purge["continuousPurgeData"]).toBeUndefined();
     });
   });
 });
