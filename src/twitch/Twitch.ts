@@ -6,6 +6,7 @@ import { AutoWired } from "../decorators/AutoWired";
 import { ORM } from "../services/ORM";
 import { DebugLogger } from "../decorators/DebugLogger";
 import { TwitchData } from "../types/data/TwitchData";
+import { Logger, LogLevel } from "../utils/Logger";
 @singleton()
 export class Twitch {
   @AutoWired private orm!: ORM;
@@ -66,14 +67,12 @@ export class Twitch {
 
   @DebugLogger
   private async onRefresh(token: AccessToken) {
-    console.log(this.tokenInfo);
     this.tokenInfo.accessToken = token.accessToken;
     this.tokenInfo.refreshToken =
       token.refreshToken ?? this.tokenInfo.refreshToken;
     this.tokenInfo.expirey = token.expiresIn ?? 600;
     this.tokenInfo.tokenObtainTime = new Date();
-    console.log(this.tokenInfo);
-
+    Logger.log(LogLevel.WARN, "Twitch tokens have been refreshed.");
     const repository = this.orm.em.getRepository(TokenInfo);
     await repository.persistAndFlush(this.tokenInfo);
   }

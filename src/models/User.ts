@@ -22,10 +22,10 @@ export class User extends BaseModel {
   displayName!: string;
 
   @Property()
-  type!: string;
+  type?: string;
 
   @Property()
-  broadcasterType!: string;
+  broadcasterType?: string;
 
   @Property()
   description?: string;

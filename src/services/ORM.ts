@@ -11,7 +11,8 @@ export class ORM {
   @DebugLogger
   public async init(): Promise<void> {
     this.mikroORM = await MikroORM.init({
-      entities: ["./src/models/*.ts", "./src/models/embeddables/*.ts"],
+      entitiesTs: ["./src/models/*.ts", "./src/models/embeddables/*.ts"],
+      entities: ["./bin/models/*.ts", "./bin/models/embeddables/*.ts"],
       dbName: "Amazeful",
       type: "mongo",
       ensureIndexes: true,
@@ -30,7 +31,7 @@ export class ORM {
   }
 
   public async close(): Promise<void> {
-    return await this.mikroORM.close();
+    return this.mikroORM.close();
   }
 
   /**

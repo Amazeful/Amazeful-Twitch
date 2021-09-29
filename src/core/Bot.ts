@@ -4,6 +4,7 @@ import { AutoWired } from "../decorators/AutoWired";
 import { ChatClient } from "../twitch/ChatClient";
 import { ORM } from "../services/ORM";
 import { Twitch } from "../twitch/Twitch";
+import { Channel } from "../models/Channel";
 /**
  * Class Bot defines global Twitch bot instance
  * Serves as an entry point for all channelbots
@@ -30,7 +31,6 @@ export class Bot {
       await this.orm.init();
       await this.twitch.init();
       await this.client.connect();
-
       Logger.log(
         LogLevel.INFO,
         `All services are now running.`,
@@ -42,5 +42,16 @@ export class Bot {
         `Failed to init the global bot object. Shutting down ...: ${e}`
       );
     }
+  }
+
+  /**
+   * Get channel list for this process
+   * @returns List of channels
+   */
+  public async getChannels(): Promise<Array<Channel>> {
+    return this.orm.em.find(Channel, {
+      shard: this.shardID,
+      joined: true
+    });
   }
 }
