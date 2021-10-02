@@ -1,4 +1,4 @@
-import { Channel } from "../../core/Channel";
+import { ChannelBot } from "../../core/ChannelBot";
 import { Module } from "../../types/Module";
 import { RegisterModule } from "../RegisterModule";
 jest.mock("../../types/Module");
@@ -15,7 +15,7 @@ describe("./decorators/RegisterModule", () => {
   test("Should add module to Channel class metadata", () => {
     const expected = [TestModule];
 
-    const actual = Channel.moduleContainer;
+    const actual = ChannelBot.moduleContainer;
 
     //Use strict equal. No need to check types as they will be converted to module type in Channel class
     expect(actual).toStrictEqual(expected);

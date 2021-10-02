@@ -1,13 +1,14 @@
-import { Channel } from "../Channel";
+import { ChannelBot } from "../ChannelBot";
 import { Module } from "../../types/Module";
+import { Channel } from "../../models/Channel";
 
-let channel: Channel;
+let channel: ChannelBot;
 
 beforeAll(async () => {
-  await Channel.populateModuleContainer();
+  await ChannelBot.populateModuleContainer();
 });
 beforeEach(() => {
-  channel = new Channel();
+  channel = new ChannelBot(new Channel());
 });
 
 describe("./core/Channel", () => {
